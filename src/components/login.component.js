@@ -87,7 +87,7 @@ class Login extends Component {
     if (this.checkBtn.context._errors.length === 0) {
       AuthService.login(this.state.username, this.state.password).then(
         () => {
-          this.props.router.navigate("/profile");
+          this.props.router.navigate("/");
           window.location.reload();
         },
         error => {
@@ -135,7 +135,7 @@ class Login extends Component {
                   marginBottom: 4
                 }}
                 size="small"
-                label="Slapyvardis"
+                label="Prisijungimo vardas"
                 fullWidth
                 type="text"
                 className="form-control"
