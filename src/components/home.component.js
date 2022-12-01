@@ -1,6 +1,10 @@
+import { maxWidth, width } from "@mui/system";
 import React, { Component } from "react";
 
 import UserService from "../services/user.service";
+
+import MyLogo from "../assets/logo.png";
+import { Box, Container, CssBaseline } from "@mui/material";
 
 export default class Home extends Component {
   constructor(props) {
@@ -31,11 +35,25 @@ export default class Home extends Component {
 
   render() {
     return (
-      <div className="container">
-        <header className="jumbotron">
-          <h3>{this.state.content}</h3>
-        </header>
-      </div>
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <Box
+          sx={{
+            marginTop: 25,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center'
+          }}
+        >
+          <img
+            src={MyLogo}
+            height="175"
+            loading="lazy"
+          >
+
+          </img>
+        </Box>
+      </Container>
     );
   }
 }

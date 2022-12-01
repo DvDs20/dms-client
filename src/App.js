@@ -5,6 +5,10 @@ import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import PersonRoundedIcon from '@mui/icons-material/PersonRounded';
+import ExitToAppRoundedIcon from '@mui/icons-material/ExitToAppRounded';
+import AccountBoxRoundedIcon from '@mui/icons-material/AccountBoxRounded';
+import PeopleAltRoundedIcon from '@mui/icons-material/PeopleAltRounded';
+import MeetingRoomRoundedIcon from '@mui/icons-material/MeetingRoomRounded';
 
 import AuthService from "./services/auth.service";
 
@@ -15,6 +19,8 @@ import Profile from "./components/profile.component";
 import BoardStudent from "./components/board-student.component";
 import BoardModerator from "./components/board-moderator.component";
 import BoardAdmin from "./components/board-admin.component";
+import StudentsList from "./components/studentsList.components";
+import RoomsList from "./components/roomsList.component";
 
 import BasicMenu from "./components/menu/dropdown-button";
 
@@ -32,6 +38,8 @@ class App extends Component {
       showModeratorBoard: false,
       showAdminBoard: false,
       showStudentBoard: false,
+      showStudentsList: false,
+      showRoomsList: false,
       currentUser: undefined,
     };
   }
@@ -44,7 +52,9 @@ class App extends Component {
         currentUser: user,
         showModeratorBoard: user.roles.includes("ROLE_MODERATOR"),
         showAdminBoard: user.roles.includes("ROLE_ADMIN"),
-        showStudentBoard: user.roles.includes("ROLE_STUDENT")
+        showStudentBoard: user.roles.includes("ROLE_STUDENT"),
+        showStudentsList: user.roles.includes("ROLE_ADMIN"),
+        showRoomsList: user.roles.includes("ROLE_ADMIN"),
       });
     }
 
@@ -63,13 +73,15 @@ class App extends Component {
       showModeratorBoard: false,
       showAdminBoard: false,
       showStudentBoard: false,
+      showStudentsList: false,
+      showRoomsList: false,
       currentUser: undefined,
     });
   }
 
 
   render() {
-    const { currentUser, showModeratorBoard, showAdminBoard, showStudentBoard } = this.state;
+    const { currentUser, showModeratorBoard, showAdminBoard, showStudentBoard, showStudentsList, showRoomsList } = this.state;
     return (
       <div>
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -103,6 +115,28 @@ class App extends Component {
               </li>
             )}
 
+            {showStudentsList && (
+              <li className="nav-item">
+                <Link to={"/students"} className="nav-link">
+                  <Button>
+                    <PeopleAltRoundedIcon />
+                    <span>Studentai</span>
+                  </Button>
+                </Link>
+              </li>
+            )}
+
+            {showRoomsList && (
+              <li className="nav-item">
+                <Link to={"/rooms"} className="nav-link">
+                  <Button>
+                    <MeetingRoomRoundedIcon />
+                    <span>Kambariai</span>
+                  </Button>
+                </Link>
+              </li>
+            )}
+
             {showStudentBoard && (
               <li className="nav-item">
                 <Link to={"/student"} className="nav-link">
@@ -112,6 +146,7 @@ class App extends Component {
                 </Link>
               </li>
             )}
+
           </div>
 
           {currentUser ? (
@@ -127,12 +162,17 @@ class App extends Component {
                   <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     <li className="nav-item">
                       <Link to={"/profile"} className="nav-link">
-                        Profilis
+                        <AccountBoxRoundedIcon />
+                        <span>  Profilis</span>
                       </Link>
                     </li>
                     <li className="nav-item">
+                      <span>   Keisti slaptažodį</span>
+                    </li>
+                    <li className="nav-item">
                       <a href="/login" className="nav-link" onClick={this.logOut}>
-                        Atsijungti
+                        <ExitToAppRoundedIcon />
+                        <span>  Atsijungti</span>
                       </a>
                     </li>
                   </div>
@@ -161,6 +201,8 @@ class App extends Component {
             <Route path="/user" element={<BoardStudent />} />
             <Route path="/mod" element={<BoardModerator />} />
             <Route path="/admin" element={<BoardAdmin />} />
+            <Route path="/students" element={<StudentsList />} />
+            <Route path="/rooms" element={<RoomsList />} />
           </Routes>
         </div>
 
