@@ -28,6 +28,7 @@ import MyLogo from "./assets/logo.png";
 
 // import AuthVerify from "./common/auth-verify";
 import EventBus from "./common/EventBus";
+import AddRoom from "./components/add-room.component";
 
 class App extends Component {
   constructor(props) {
@@ -203,6 +204,7 @@ class App extends Component {
             <Route path="/admin" element={<BoardAdmin />} />
             <Route path="/students" element={<StudentsList />} />
             <Route path="/rooms" element={<RoomsList />} />
+            <Route path="/add-room" element={<AddRoom />} />
           </Routes>
         </div>
 
