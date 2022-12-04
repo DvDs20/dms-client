@@ -97,7 +97,7 @@ export default class AddRoom extends Component {
         return (
             <div>
                 <div style={{ "display": this.state.show ? "block" : "none" }}>
-                    <Toast children={{ show: this.state.show, message: "Kambarys pridėtas sėkmingai!" }} />
+                    <Toast children={{ show: this.state.show, message: "Kambarys pridėtas sėkmingai!", type: "success" }} />
                 </div>
                 <Box>
                     <Box
