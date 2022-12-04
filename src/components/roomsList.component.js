@@ -1,5 +1,5 @@
 import React, { Component, useState } from "react";
-import { withRouter } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 
 
 
@@ -24,8 +24,6 @@ export default class RoomsList extends Component {
         this.state = {
             rooms: []
         };
-
-        this.addRoom = this.addRoom.bind(this);
     }
 
     componentDidMount() {
@@ -58,10 +56,6 @@ export default class RoomsList extends Component {
         //         }
         //     }
         // );
-    }
-
-    addRoom() {
-        this.props.history.push('/add-room');
     }
 
     render() {
@@ -125,7 +119,11 @@ export default class RoomsList extends Component {
                                         </Table>
                                     </Grid>
                                     <Grid item>
-                                        <Button variant="outlined" color="success" onClick={this.addRoom} ><span>Pridėti naują kambarį</span></Button>
+                                        <Link to={"/add-room"}
+                                            style={{ textDecoration: 'none' }}
+                                        >
+                                            <Button variant="outlined" color="success"><span>Pridėti naują kambarį</span></Button>
+                                        </Link>
                                     </Grid>
                                 </Grid>
                             </Grid>

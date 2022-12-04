@@ -9,8 +9,8 @@ class RoomService {
         return axios.get(ROOM_API_BASE_URL, { headers: authHeader() });
     }
 
-    addRoom() {
-        return axios.post(ROOM_API_BASE_URL, { headers: authHeader() });
+    addRoom(room) {
+        return axios.post(ROOM_API_BASE_URL, room, { headers: authHeader() });
     }
 }
 
