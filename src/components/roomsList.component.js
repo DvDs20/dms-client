@@ -1,5 +1,6 @@
 import React, { Component, useState } from "react";
-import { Link, withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+
 
 
 
@@ -17,8 +18,9 @@ import Toast from "./toast.component";
 
 import RoomService from "../services/RoomService";
 import { AlignHorizontalCenter } from "@mui/icons-material";
+import { withRouter } from '../common/with-router';
 
-export default class RoomsList extends Component {
+class RoomsList extends Component {
     constructor(props) {
         super(props);
 
@@ -80,7 +82,7 @@ export default class RoomsList extends Component {
 
             <div>
                 <div style={{ "display": this.state.show ? "block" : "none" }}>
-                    <Toast children={{ show: this.state.show, message: "Kambarys ištrintas sėkmingai!", type: "error" }} />
+                    <Toast show={this.state.show} message={"Kambarys ištrintas sėkmingai!"} type={"error"} />
                 </div>
                 <Box>
                     <Box
@@ -130,8 +132,14 @@ export default class RoomsList extends Component {
                                                                         <span style={{ backgroundColor: 'rgba(47, 122, 32, 0.3)', borderRadius: 12, padding: 4, margin: 10 }} ><FiberManualRecordRoundedIcon color="success" fontSize="small" />Laisvas</span>} </td>
                                                                     <td> {room.floor} </td>
                                                                     <td> {room.roomCapacity} </td>
-                                                                    <td><span><IconButton aria-label="edit"><EditRoundedIcon style={{ color: '#1E71C9' }} /></IconButton>
-                                                                        <IconButton aria-label="delete" onClick={this.deleteRoom.bind(this, room.id)}><DeleteForeverRoundedIcon style={{ color: '#E31E10' }} /></IconButton></span></td>
+                                                                    <td>
+                                                                        <span>
+                                                                            <Link to={"/edit/" + room.id}>
+                                                                                <IconButton aria-label="edit"><EditRoundedIcon style={{ color: '#1E71C9' }} /></IconButton>
+                                                                            </Link>
+                                                                            <IconButton aria-label="delete" onClick={this.deleteRoom.bind(this, room.id)}><DeleteForeverRoundedIcon style={{ color: '#E31E10' }} /></IconButton>
+                                                                        </span>
+                                                                    </td>
                                                                 </tr>
 
                                                         )
@@ -160,3 +168,5 @@ export default class RoomsList extends Component {
         );
     }
 }
+
+export default withRouter(RoomsList);
