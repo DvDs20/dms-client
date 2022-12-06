@@ -29,6 +29,7 @@ import MyLogo from "./assets/logo.png";
 // import AuthVerify from "./common/auth-verify";
 import EventBus from "./common/EventBus";
 import AddRoom from "./components/add-room.component";
+import EditRoom from "./components/edit-room.component";
 
 class App extends Component {
   constructor(props) {
@@ -205,6 +206,7 @@ class App extends Component {
             <Route path="/students" element={<StudentsList />} />
             <Route path="/rooms" element={<RoomsList />} />
             <Route path="/add-room" element={<AddRoom />} />
+            <Route path="/edit/:id" element={<EditRoom />} />
           </Routes>
         </div>
 
