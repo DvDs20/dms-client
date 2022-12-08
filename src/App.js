@@ -31,6 +31,7 @@ import MyLogo from "./assets/logo.png";
 
 import EventBus from "./common/EventBus";
 import CreateContract from "./components/create-contract.component";
+import EditStudent from "./components/edit-student.component";
 
 
 class App extends Component {
@@ -208,9 +209,10 @@ class App extends Component {
             <Route path="/students" element={<StudentsList />} />
             <Route path="/rooms" element={<RoomsList />} />
             <Route path="/add-room" element={<AddRoom />} />
-            <Route path="/edit/:id" element={<EditRoom />} />
+            <Route path="/rooms/edit/:id" element={<EditRoom />} />
             <Route path="/add-student" element={<AddStudent />} />
             <Route path="/create-contract" element={<CreateContract />} />
+            <Route path="/students/edit/:id" element={<EditStudent />} />
           </Routes>
         </div>
 

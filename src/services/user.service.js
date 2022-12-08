@@ -23,6 +23,14 @@ class UserService {
   getStudentsList() {
     return axios.get(API_URL + 'students', { headers: authHeader() });
   }
+
+  getStudentById(userId) {
+    return axios.get(API_URL + 'students/' + userId, { headers: authHeader() });
+  }
+
+  updateStudent(userId, user) {
+    return axios.put(API_URL + 'students/' + userId, user, { headers: authHeader() });
+  }
 }
 
 export default new UserService();

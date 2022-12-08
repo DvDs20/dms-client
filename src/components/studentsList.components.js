@@ -98,7 +98,11 @@ class StudentsList extends Component {
                                                         this.state.students.map(
                                                             student =>
                                                                 <tr key={student.id}>
-                                                                    <td><span style={{ color: '#1E71C9' }} >{student.lastName}</span></td>
+                                                                    <td>
+                                                                        <Link to={"/students/edit/" + student.id}>
+                                                                            <span style={{ color: '#1E71C9' }} >{student.lastName}</span>
+                                                                        </Link>
+                                                                    </td>
                                                                     <td> {student.firstName} </td>
                                                                     <td> {student.userStatus == 0 ?
                                                                         (<span style={{ backgroundColor: 'rgba(227, 30, 16, 0.3)', borderRadius: 12, padding: 4, margin: 10 }} > <FiberManualRecordRoundedIcon color="error" fontSize="small" />Negaliojanti sutartis</span>) :
