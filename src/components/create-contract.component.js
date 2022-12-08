@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link, useLocation, useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 import { Box } from "@mui/system";
 import { Button, Divider, Grid, IconButton, Paper, TextField, Typography } from "@mui/material";
@@ -11,91 +11,60 @@ import EditRoundedIcon from '@mui/icons-material/EditRounded';
 import DeleteForeverRoundedIcon from '@mui/icons-material/DeleteForeverRounded';
 import Form from 'react-bootstrap/Form';
 
-
 import axios from 'axios';
 import authHeader from "../services/auth-header";
 import Toast from "./toast.component";
 
 import RoomService from "../services/RoomService";
-import withRouter1 from "../hooks/withRouter";
-import { withRouter } from '../common/with-router';
-import RoomsList from "./roomsList.component";
+import { withRouter } from "../common/with-router";
 
-class EditRoom extends Component {
+class CreateContract extends Component {
     constructor(props) {
         super(props);
 
         this.state = this.initialState;
         this.state.show = false;
         this.roomChange = this.roomChange.bind(this);
-        this.updateRoom = this.updateRoom.bind(this);
+        this.submitRoom = this.submitRoom.bind(this);
     }
-
 
     initialState = {
         id: '', roomStatus: '', roomNumber: '', floor: '', roomCapacity: ''
-    }
-
-    findRoomById = () => {
-        const { id } = this.props.router.params;
-
-        RoomService.getRoomById(id)
-            .then(response => {
-                if (response.data != null) {
-                    this.setState({
-                        id: response.data.id,
-                        roomStatus: response.data.roomStatus,
-                        roomNumber: response.data.roomNumber,
-                        floor: response.data.floor,
-                        roomCapacity: response.data.roomCapacity
-                    })
-                }
-            }).catch((error) => {
-                console.error("Error: " + error);
-            });
-    }
-
-    componentDidMount() {
-        this.findRoomById();
     }
 
     resetRoom = () => {
         this.setState(() => this.initialState);
     }
 
-    updateRoom = event => {
+    submitRoom = event => {
         event.preventDefault();
 
         const room = {
-            roomId: this.state.id,
-            roomStatus: this.state.roomStatus,
+            roomStatus: '1',
             roomNumber: this.state.roomNumber,
             floor: this.state.floor,
             roomCapacity: this.state.roomCapacity
         };
 
-        RoomService.updateRoom(room.roomId, room)
+        RoomService.addRoom(room)
             .then(response => {
                 if (response.data != null) {
                     this.setState({ "show": true })
                     setTimeout(() => this.setState({ "show": false }), 5000);
-                    setTimeout(() => this.roomsList(), 3000);
                 }
                 else {
                     this.setState({ "show": false })
                 }
             });
         this.setState(this.initialState);
+
+
     }
 
     roomChange = event => {
         this.setState({
             [event.target.name]: event.target.value
         });
-    }
-
-    roomsList = () => {
-        return this.props.router.navigate("/rooms");
     }
 
     render() {
@@ -105,7 +74,7 @@ class EditRoom extends Component {
         return (
             <div>
                 <div style={{ "display": this.state.show ? "block" : "none" }}>
-                    <Toast show={this.state.show} message={"Kambarys atnaujintas sėkmingai!"} type={"info"} />
+                    <Toast show={this.state.show} message={"Kambarys pridėtas sėkmingai!"} type={"success"} />
                 </div>
                 <Box>
                     <Box
@@ -130,12 +99,12 @@ class EditRoom extends Component {
                                 <Grid item xs={8} sm container>
                                     <Grid item xs container direction="column" spacing={2}>
                                         <Grid item>
-                                            <Typography gutterBottom variant="subtitle1" component="div">Kambario redagavimas</Typography>
+                                            <Typography gutterBottom variant="subtitle1" component="div">Naujos sutarties sudarymas</Typography>
                                             <Divider />
                                         </Grid>
                                         <Grid item xs container direction="column" spacing={2}>
                                             <Grid item>
-                                                <Form onReset={this.resetRoom} onSubmit={this.updateRoom} id="roomFormId">
+                                                <Form onReset={this.resetRoom} onSubmit={this.submitRoom} id="roomFormId">
                                                     <Grid item>
                                                         <Grid item>
                                                             <div class="row">
@@ -198,7 +167,7 @@ class EditRoom extends Component {
                                                         <Grid item paddingTop={2}>
                                                             <div class="row">
                                                                 <div class="col-sm">
-                                                                    <Button variant="outlined" color="success" type="submit" fullWidth ><span>Išsaugoti</span></Button>{' '}
+                                                                    <Button variant="outlined" color="success" type="submit" fullWidth ><span>Sudaryti sutartį</span></Button>{' '}
                                                                 </div>
                                                                 <div class="col-sm">
                                                                     <Button variant="outlined" color="info" type="reset" fullWidth ><span>Išvalyti</span></Button>
@@ -226,4 +195,4 @@ class EditRoom extends Component {
     }
 }
 
-export default withRouter(EditRoom);
+export default withRouter(CreateContract);

@@ -91,12 +91,15 @@ class Login extends Component {
           window.location.reload();
         },
         error => {
-          const resMessage =
+          let resMessage =
             (error.response &&
               error.response.data &&
               error.response.data.message) ||
             error.message ||
             error.toString();
+          if (resMessage == "Bad credentials") {
+            resMessage = "Blogi prisijungimo duomenys! Patikrinkite ir bandykite iš naujo"
+          }
 
           this.setState({
             loading: false,
