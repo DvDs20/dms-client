@@ -21,15 +21,17 @@ import BoardModerator from "./components/board-moderator.component";
 import BoardAdmin from "./components/board-admin.component";
 import StudentsList from "./components/studentsList.components";
 import RoomsList from "./components/roomsList.component";
+import AddRoom from "./components/add-room.component";
+import EditRoom from "./components/edit-room.component";
+import AddStudent from "./components/add-student.component";
 
 import BasicMenu from "./components/menu/dropdown-button";
 
 import MyLogo from "./assets/logo.png";
 
-// import AuthVerify from "./common/auth-verify";
 import EventBus from "./common/EventBus";
-import AddRoom from "./components/add-room.component";
-import EditRoom from "./components/edit-room.component";
+import CreateContract from "./components/create-contract.component";
+
 
 class App extends Component {
   constructor(props) {
@@ -207,6 +209,8 @@ class App extends Component {
             <Route path="/rooms" element={<RoomsList />} />
             <Route path="/add-room" element={<AddRoom />} />
             <Route path="/edit/:id" element={<EditRoom />} />
+            <Route path="/add-student" element={<AddStudent />} />
+            <Route path="/create-contract" element={<CreateContract />} />
           </Routes>
         </div>
 
