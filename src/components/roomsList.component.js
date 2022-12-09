@@ -92,7 +92,6 @@ class RoomsList extends Component {
                                                         <th>Statusas</th>
                                                         <th>Aukštas</th>
                                                         <th>Miegamų vietų skaičius</th>
-                                                        <th>Veiksmai</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -110,16 +109,7 @@ class RoomsList extends Component {
                                                                         <span style={{ backgroundColor: 'rgba(47, 122, 32, 0.3)', borderRadius: 12, padding: 4, margin: 10 }} ><FiberManualRecordRoundedIcon color="success" fontSize="small" />Laisvas</span>} </td>
                                                                     <td> {room.floor} </td>
                                                                     <td> {room.roomCapacity} </td>
-                                                                    <td>
-                                                                        <span>
-                                                                            <Link to={"/edit/" + room.id}>
-                                                                                <IconButton aria-label="edit"><EditRoundedIcon style={{ color: '#1E71C9' }} /></IconButton>
-                                                                            </Link>
-                                                                            <IconButton aria-label="delete" onClick={this.deleteRoom.bind(this, room.id)}><DeleteForeverRoundedIcon style={{ color: '#E31E10' }} /></IconButton>
-                                                                        </span>
-                                                                    </td>
                                                                 </tr>
-
                                                         )
                                                     }
                                                 </tbody>
