@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Link, useLocation, useParams } from 'react-router-dom';
 
 import { Box } from "@mui/system";
-import { Button, Divider, Grid, IconButton, Paper, TextField, Typography } from "@mui/material";
+import { Button, Dialog, Divider, Grid, IconButton, Paper, TextField, Typography, DialogTitle, DialogContent, DialogContentText, DialogActions } from "@mui/material";
 import ReactBootstrap, { Table } from 'react-bootstrap';
 import UserService from "../services/user.service";
 import EventBus from "../common/EventBus";
@@ -26,9 +26,12 @@ class EditRoom extends Component {
         super(props);
 
         this.state = this.initialState;
-        this.state.show = false;
+        this.state.showUpdateAlert = false;
+        this.state.showDeleteAlert = false;
+        this.state.showCantDeleteAlert = false;
         this.roomChange = this.roomChange.bind(this);
         this.updateRoom = this.updateRoom.bind(this);
+        this.deleteRoom = this.deleteRoom.bind(this);
     }
 
 
@@ -77,12 +80,12 @@ class EditRoom extends Component {
         RoomService.updateRoom(room.roomId, room)
             .then(response => {
                 if (response.data != null) {
-                    this.setState({ "show": true })
-                    setTimeout(() => this.setState({ "show": false }), 5000);
+                    this.setState({ "showUpdateAler": true })
+                    setTimeout(() => this.setState({ "showUpdateAlert": false }), 5000);
                     setTimeout(() => this.roomsList(), 3000);
                 }
                 else {
-                    this.setState({ "show": false })
+                    this.setState({ "showUpdateAlert": false })
                 }
             });
         this.setState(this.initialState);
@@ -94,6 +97,29 @@ class EditRoom extends Component {
         });
     }
 
+    deleteRoom = event => {
+        const { id } = this.props.router.params;
+        event.preventDefault();
+
+        if (this.state.roomStatus === 0) {
+            this.setState({ "showCantDeleteAlert": true })
+            setTimeout(() => this.setState({ "showCantDeleteAlert": false }), 5000);
+        }
+        else {
+            RoomService.deleteRoom(id)
+                .then(response => {
+                    if (response.data != null) {
+                        this.setState({ "showDeleteAlert": true })
+                        setTimeout(() => this.setState({ "showDeleteAlert": false }), 5000);
+                        setTimeout(() => this.roomsList(), 3000);
+                    }
+                    else {
+                        this.setState({ "showDeleteAlert": false })
+                    }
+                });
+        }
+    };
+
     roomsList = () => {
         return this.props.router.navigate("/rooms");
     }
@@ -104,8 +130,14 @@ class EditRoom extends Component {
 
         return (
             <div>
-                <div style={{ "display": this.state.show ? "block" : "none" }}>
-                    <Toast show={this.state.show} message={"Kambarys atnaujintas sėkmingai!"} type={"info"} />
+                <div style={{ "display": this.state.showUpdateAler ? "block" : "none" }}>
+                    <Toast show={this.state.showUpdateAler} message={"Kambarys atnaujintas sėkmingai!"} type={"info"} />
+                </div>
+                <div style={{ "display": this.state.showDeleteAlert ? "block" : "none" }}>
+                    <Toast show={this.state.showDeleteAlert} message={"Kambarys ištrintas sėkmingai!"} type={"error"} />
+                </div>
+                <div style={{ "display": this.state.showCantDeleteAlert ? "block" : "none" }}>
+                    <Toast show={this.state.showCantDeleteAlert} message={"Šis kambarys yra užimtas, todėl ištrinti negalima!"} type={"warning"} />
                 </div>
                 <Box>
                     <Box
@@ -196,12 +228,18 @@ class EditRoom extends Component {
                                                             </div>
                                                         </Grid>
                                                         <Grid item paddingTop={2}>
+                                                            <Divider />
+                                                        </Grid>
+                                                        <Grid item paddingTop={2}>
                                                             <div class="row">
                                                                 <div class="col-sm">
                                                                     <Button variant="outlined" color="success" type="submit" fullWidth ><span>Išsaugoti</span></Button>{' '}
                                                                 </div>
                                                                 <div class="col-sm">
                                                                     <Button variant="outlined" color="info" type="reset" fullWidth ><span>Išvalyti</span></Button>
+                                                                </div>
+                                                                <div class="col-sm">
+                                                                    <Button variant="outlined" color="error" onClick={this.deleteRoom} fullWidth ><span>Ištrinti</span></Button>
                                                                 </div>
                                                             </div>
                                                         </Grid>
@@ -219,9 +257,7 @@ class EditRoom extends Component {
 
                     </Box>
                 </Box>
-            </div>
-
-
+            </div >
         );
     }
 }
