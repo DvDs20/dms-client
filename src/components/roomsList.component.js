@@ -28,22 +28,6 @@ class RoomsList extends Component {
         };
     }
 
-    deleteRoom = (roomId) => {
-        RoomService.deleteRoom(roomId)
-            .then(response => {
-                if (response.data != null) {
-                    this.setState({ "show": true })
-                    setTimeout(() => this.setState({ "show": false }), 5000);
-                    this.setState({
-                        rooms: this.state.rooms.filter(room => room.id !== roomId)
-                    });
-                }
-                else {
-                    this.setState({ "show": false })
-                }
-            });
-    };
-
     componentDidMount() {
 
         RoomService.getRoomsList().then((res) => {

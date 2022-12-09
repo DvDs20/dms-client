@@ -26,7 +26,9 @@ class EditStudent extends Component {
         super(props);
 
         this.state = this.initialState;
-        this.state.show = false;
+        this.state.showUpdateStudentAlert = false;
+        this.state.showDeleteStudentAlert = false;
+        this.state.showCantDeleteAlert = false;
         this.studentChange = this.studentChange.bind(this);
         this.updateStudent = this.updateStudent.bind(this);
     }
@@ -81,17 +83,39 @@ class EditStudent extends Component {
         userService.updateStudent(id, student)
             .then(response => {
                 if (response.data != null) {
-                    this.setState({ "show": true })
-                    setTimeout(() => this.setState({ "show": false }), 5000);
+                    this.setState({ "showUpdateStudentAlert": true })
+                    setTimeout(() => this.setState({ "showUpdateStudentAlert": false }), 5000);
                     setTimeout(() => this.studentsList(), 3000);
                 }
                 else {
-                    this.setState({ "show": false })
+                    this.setState({ "showUpdateStudentAlert": false })
                 }
             });
         this.setState(this.initialState);
+    }
+
+    deleteStudent = event => {
+        const { id } = this.props.router.params;
+        event.preventDefault();
+        console.log(this.state.userStatus)
 
 
+        UserService.deleteStudent(id)
+            .then(response => {
+                if (response.data != null) {
+                    this.setState({ "showDeleteStudentAlert": true })
+                    setTimeout(() => this.setState({ "showDeleteStudentAlert": false }), 5000);
+                    setTimeout(() => this.studentsList(), 3000);
+                }
+                else {
+                    this.setState({ "showDeleteStudentAlert": false })
+                }
+            })
+            .catch(error => {
+                this.setState({ "showCantDeleteAlert": true })
+                setTimeout(() => this.setState({ "showCantDeleteAlert": false }), 5000);
+                console.error(error.response.data);
+            })
     }
 
     studentChange = event => {
@@ -110,8 +134,14 @@ class EditStudent extends Component {
 
         return (
             <div>
-                <div style={{ "display": this.state.show ? "block" : "none" }}>
-                    <Toast show={this.state.show} message={"Studentas atnaujintas sėkmingai!"} type={"success"} />
+                <div style={{ "display": this.state.showUpdateStudentAlert ? "block" : "none" }}>
+                    <Toast show={this.state.showUpdateStudentAlert} message={"Studentas atnaujintas sėkmingai!"} type={"success"} />
+                </div>
+                <div style={{ "display": this.state.showDeleteStudentAlert ? "block" : "none" }}>
+                    <Toast show={this.state.showDeleteStudentAlert} message={"Studentas ištrintas sėkmingai!"} type={"error"} />
+                </div>
+                <div style={{ "display": this.state.showCantDeleteAlert ? "block" : "none" }}>
+                    <Toast show={this.state.showCantDeleteAlert} message={"Studento ištrinti negalima, nes šis studentas, turi sutartį!"} type={"warning"} />
                 </div>
                 <Box>
                     <Box
@@ -309,12 +339,18 @@ class EditStudent extends Component {
                                                             </div>
                                                         </Grid>
                                                         <Grid item paddingTop={2}>
+                                                            <Divider />
+                                                        </Grid>
+                                                        <Grid item paddingTop={2}>
                                                             <div class="row">
                                                                 <div class="col-sm">
                                                                     <Button variant="outlined" color="success" type="submit" fullWidth ><span>Atnaujinti studento informaciją</span></Button>{' '}
                                                                 </div>
                                                                 <div class="col-sm">
                                                                     <Button variant="outlined" color="info" type="reset" fullWidth ><span>Išvalyti</span></Button>
+                                                                </div>
+                                                                <div class="col-sm">
+                                                                    <Button variant="outlined" color="info" onClick={this.deleteStudent} fullWidth ><span>Ištrinti</span></Button>
                                                                 </div>
                                                             </div>
                                                         </Grid>
