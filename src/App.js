@@ -9,6 +9,7 @@ import ExitToAppRoundedIcon from '@mui/icons-material/ExitToAppRounded';
 import AccountBoxRoundedIcon from '@mui/icons-material/AccountBoxRounded';
 import PeopleAltRoundedIcon from '@mui/icons-material/PeopleAltRounded';
 import MeetingRoomRoundedIcon from '@mui/icons-material/MeetingRoomRounded';
+import ArticleRoundedIcon from '@mui/icons-material/ArticleRounded';
 
 import AuthService from "./services/auth.service";
 
@@ -32,6 +33,8 @@ import MyLogo from "./assets/logo.png";
 import EventBus from "./common/EventBus";
 import CreateContract from "./components/create-contract.component";
 import EditStudent from "./components/edit-student.component";
+import ContractsList from "./components/contractsList.component";
+import AddContract from "./components/add-contract.component";
 
 
 class App extends Component {
@@ -45,6 +48,7 @@ class App extends Component {
       showStudentBoard: false,
       showStudentsList: false,
       showRoomsList: false,
+      showContractsList: false,
       currentUser: undefined,
     };
   }
@@ -60,6 +64,7 @@ class App extends Component {
         showStudentBoard: user.roles.includes("ROLE_STUDENT"),
         showStudentsList: user.roles.includes("ROLE_ADMIN"),
         showRoomsList: user.roles.includes("ROLE_ADMIN"),
+        showContractsList: user.roles.includes("ROLE_ADMIN"),
       });
     }
 
@@ -80,13 +85,14 @@ class App extends Component {
       showStudentBoard: false,
       showStudentsList: false,
       showRoomsList: false,
+      showContractsList: false,
       currentUser: undefined,
     });
   }
 
 
   render() {
-    const { currentUser, showModeratorBoard, showAdminBoard, showStudentBoard, showStudentsList, showRoomsList } = this.state;
+    const { currentUser, showModeratorBoard, showAdminBoard, showStudentBoard, showStudentsList, showRoomsList, showContractsList } = this.state;
     return (
       <div>
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -137,6 +143,17 @@ class App extends Component {
                   <Button>
                     <MeetingRoomRoundedIcon />
                     <span>Kambariai</span>
+                  </Button>
+                </Link>
+              </li>
+            )}
+
+            {showContractsList && (
+              <li className="nav-item">
+                <Link to={"/contracts"} className="nav-link">
+                  <Button>
+                    <ArticleRoundedIcon />
+                    <span>Sutartys</span>
                   </Button>
                 </Link>
               </li>
@@ -213,6 +230,8 @@ class App extends Component {
             <Route path="/add-student" element={<AddStudent />} />
             <Route path="/create-contract" element={<CreateContract />} />
             <Route path="/students/edit/:id" element={<EditStudent />} />
+            <Route path="/contracts" element={<ContractsList />} />
+            <Route path="/add-contract" element={<AddContract />} />
           </Routes>
         </div>
 
