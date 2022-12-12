@@ -76,6 +76,7 @@ class RoomsList extends Component {
                                                         <th>Statusas</th>
                                                         <th>Aukštas</th>
                                                         <th>Miegamų vietų skaičius</th>
+                                                        <th>Likęs miegamų vietų skaičius</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -90,9 +91,14 @@ class RoomsList extends Component {
                                                                     </td>
                                                                     <td> {room.roomStatus == 0 ?
                                                                         (<span style={{ backgroundColor: 'rgba(227, 30, 16, 0.3)', borderRadius: 12, padding: 4, margin: 10 }} ><FiberManualRecordRoundedIcon color="error" fontSize="small" />Užimtas</span>) :
-                                                                        <span style={{ backgroundColor: 'rgba(47, 122, 32, 0.3)', borderRadius: 12, padding: 4, margin: 10 }} ><FiberManualRecordRoundedIcon color="success" fontSize="small" />Laisvas</span>} </td>
+                                                                        room.roomStatus == 1 ? (<span style={{ backgroundColor: 'rgba(47, 122, 32, 0.3)', borderRadius: 12, padding: 4, margin: 10 }} ><FiberManualRecordRoundedIcon color="success" fontSize="small" />Laisvas</span>) :
+                                                                            room.roomStatus == 2 ? (<span style={{ backgroundColor: 'rgba(186, 162, 26, 0.3)', borderRadius: 12, padding: 4, margin: 10 }} ><FiberManualRecordRoundedIcon color="warning" fontSize="small" />Dalinai užimtas</span>) :
+                                                                                (<span style={{ backgroundColor: 'rgba(47, 122, 32, 0.3)', borderRadius: 12, padding: 4, margin: 10 }} ><FiberManualRecordRoundedIcon color="success" fontSize="small" />Laisvas</span>)
+                                                                    }
+                                                                    </td>
                                                                     <td> {room.floor} </td>
                                                                     <td> {room.roomCapacity} </td>
+                                                                    <td> {room.leftRoomCapacity} </td>
                                                                 </tr>
                                                         )
                                                     }

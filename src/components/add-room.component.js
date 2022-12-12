@@ -28,7 +28,7 @@ export default class AddRoom extends Component {
     }
 
     initialState = {
-        id: '', roomStatus: '', roomNumber: '', floor: '', roomCapacity: ''
+        id: '', roomStatus: '', roomNumber: '', floor: '', roomCapacity: '', roomLeftCapacity: ''
     }
 
     resetRoom = () => {
@@ -42,7 +42,8 @@ export default class AddRoom extends Component {
             roomStatus: '1',
             roomNumber: this.state.roomNumber,
             floor: this.state.floor,
-            roomCapacity: this.state.roomCapacity
+            roomCapacity: this.state.roomCapacity,
+            leftRoomCapacity: this.state.roomCapacity
         };
 
         RoomService.addRoom(room)
