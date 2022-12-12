@@ -35,6 +35,7 @@ import CreateContract from "./components/create-contract.component";
 import EditStudent from "./components/edit-student.component";
 import ContractsList from "./components/contractsList.component";
 import AddContract from "./components/add-contract.component";
+import InfoContract from "./components/info-contract.component";
 
 
 class App extends Component {
@@ -228,10 +229,10 @@ class App extends Component {
             <Route path="/add-room" element={<AddRoom />} />
             <Route path="/rooms/edit/:id" element={<EditRoom />} />
             <Route path="/add-student" element={<AddStudent />} />
-            <Route path="/create-contract" element={<CreateContract />} />
             <Route path="/students/edit/:id" element={<EditStudent />} />
             <Route path="/contracts" element={<ContractsList />} />
             <Route path="/add-contract" element={<AddContract />} />
+            <Route path="/contracts/info/:id" element={<InfoContract />} />
           </Routes>
         </div>
 

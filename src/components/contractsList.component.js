@@ -83,7 +83,7 @@ class RoomsList extends Component {
                                                             contract =>
                                                                 <tr key={contract.id}>
                                                                     <td>
-                                                                        <Link to={"/rooms/edit/" + contract.id}>
+                                                                        <Link to={"/contracts/info/" + contract.id}>
                                                                             <span style={{ color: '#1E71C9' }} >{contract.contractNumber}</span>
                                                                         </Link>
                                                                     </td>
