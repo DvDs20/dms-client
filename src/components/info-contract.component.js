@@ -28,7 +28,7 @@ class InfoContract extends Component {
         super(props);
 
         this.state = this.initialState;
-        this.state.show = false;
+        this.state.showDeleteContractAlarm = false;
     }
 
     initialState = {
@@ -59,6 +59,23 @@ class InfoContract extends Component {
         this.findContractById();
     }
 
+    deleteContract = event => {
+        const { id } = this.props.router.params;
+        event.preventDefault();
+
+        ContractsService.deleteContract(id)
+            .then(response => {
+                if (response.data != null) {
+                    this.setState({ "showDeleteContractAlarm": true })
+                    setTimeout(() => this.setState({ "showDeleteContractAlarm": false }), 5000);
+                    setTimeout(() => this.contractList(), 3000);
+                }
+                else {
+                    this.setState({ "showDeleteContractAlarm": false })
+                }
+            });
+    }
+
 
     contractList = () => {
         return this.props.router.navigate("/contracts");
@@ -70,8 +87,8 @@ class InfoContract extends Component {
 
         return (
             <div>
-                <div style={{ "display": this.state.show ? "block" : "none" }}>
-                    <Toast show={this.state.show} message={"Sutartis sukurta sėkmingai!"} type={"success"} />
+                <div style={{ "display": this.state.showDeleteContractAlarm ? "block" : "none" }}>
+                    <Toast show={this.state.showDeleteContractAlarm} message={"Sutartis sėkmingai ištrinta"} type={"error"} />
                 </div>
                 <Box>
                     <Box
@@ -180,7 +197,7 @@ class InfoContract extends Component {
                                                         <Grid item paddingTop={2}>
                                                             <div class="row">
                                                                 <div class="col-sm">
-                                                                    <Button variant="outlined" color="error" type="submit" fullWidth ><span>Trinti sutartį</span></Button>
+                                                                    <Button variant="outlined" color="error" onClick={this.deleteContract} fullWidth ><span>Trinti sutartį</span></Button>
                                                                 </div>
                                                             </div>
                                                         </Grid>

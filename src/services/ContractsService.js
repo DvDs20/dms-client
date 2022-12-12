@@ -17,6 +17,10 @@ class ContractsService {
         return axios.get(CONTRACT_API_BASE_URL + '/info/' + contractId, { headers: authHeader() });
     }
 
+    deleteContract(contractId) {
+        return axios.delete(CONTRACT_API_BASE_URL + '/' + contractId, { headers: authHeader() });
+    }
+
 }
 
 export default new ContractsService()

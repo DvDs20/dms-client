@@ -41,7 +41,7 @@ export default class AddStudent extends Component {
         event.preventDefault();
 
         const student = {
-            userStatus: 0,
+            userStatus: 2,
             username: this.state.username,
             email: this.state.email,
             password: this.state.password,
