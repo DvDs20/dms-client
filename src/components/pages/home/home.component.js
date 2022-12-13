@@ -1,9 +1,8 @@
-import { maxWidth, width } from "@mui/system";
 import React, { Component } from "react";
 
-import UserService from "../services/user.service";
+import UserService from "../../../services/user.service";
 
-import MyLogo from "../assets/logo.png";
+import MyLogo from "../../../assets/logo.png";
 import { Box, Container, CssBaseline } from "@mui/material";
 
 export default class Home extends Component {
@@ -47,6 +46,7 @@ export default class Home extends Component {
         >
           <img
             src={MyLogo}
+            alt="Bendrabučio valdymo sistema"
             height="175"
             loading="lazy"
           >

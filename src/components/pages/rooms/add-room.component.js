@@ -1,24 +1,14 @@
 import React, { Component } from "react";
-import { Link, useParams } from 'react-router-dom';
 
 import { Box } from "@mui/system";
-import { Button, Divider, Grid, IconButton, Paper, TextField, Typography } from "@mui/material";
-import ReactBootstrap, { Table } from 'react-bootstrap';
-import UserService from "../services/user.service";
-import EventBus from "../common/EventBus";
-import FiberManualRecordRoundedIcon from '@mui/icons-material/FiberManualRecordRounded';
-import EditRoundedIcon from '@mui/icons-material/EditRounded';
-import DeleteForeverRoundedIcon from '@mui/icons-material/DeleteForeverRounded';
+import { Button, Divider, Grid, Paper, TextField, Typography } from "@mui/material";
 import Form from 'react-bootstrap/Form';
 
-import axios from 'axios';
-import authHeader from "../services/auth-header";
-import Toast from "./toast.component";
+import Toast from "../../alerts/toast.component";
 
-import RoomService from "../services/RoomService";
-import { withRouter } from "../common/with-router";
+import RoomService from "../../../services/RoomService";
 
-class CreateContract extends Component {
+export default class AddRoom extends Component {
     constructor(props) {
         super(props);
 
@@ -29,7 +19,7 @@ class CreateContract extends Component {
     }
 
     initialState = {
-        id: '', roomStatus: '', roomNumber: '', floor: '', roomCapacity: ''
+        id: '', roomStatus: '', roomNumber: '', floor: '', roomCapacity: '', roomLeftCapacity: ''
     }
 
     resetRoom = () => {
@@ -43,7 +33,8 @@ class CreateContract extends Component {
             roomStatus: '1',
             roomNumber: this.state.roomNumber,
             floor: this.state.floor,
-            roomCapacity: this.state.roomCapacity
+            roomCapacity: this.state.roomCapacity,
+            leftRoomCapacity: this.state.roomCapacity
         };
 
         RoomService.addRoom(room)
@@ -99,7 +90,7 @@ class CreateContract extends Component {
                                 <Grid item xs={8} sm container>
                                     <Grid item xs container direction="column" spacing={2}>
                                         <Grid item>
-                                            <Typography gutterBottom variant="subtitle1" component="div">Naujos sutarties sudarymas</Typography>
+                                            <Typography gutterBottom variant="subtitle1" component="div">Naujo kambario pridėjimas</Typography>
                                             <Divider />
                                         </Grid>
                                         <Grid item xs container direction="column" spacing={2}>
@@ -167,7 +158,7 @@ class CreateContract extends Component {
                                                         <Grid item paddingTop={2}>
                                                             <div class="row">
                                                                 <div class="col-sm">
-                                                                    <Button variant="outlined" color="success" type="submit" fullWidth ><span>Sudaryti sutartį</span></Button>{' '}
+                                                                    <Button variant="outlined" color="success" type="submit" fullWidth ><span>Pridėti naują kambarį</span></Button>{' '}
                                                                 </div>
                                                                 <div class="col-sm">
                                                                     <Button variant="outlined" color="info" type="reset" fullWidth ><span>Išvalyti</span></Button>
@@ -189,10 +180,6 @@ class CreateContract extends Component {
                     </Box>
                 </Box>
             </div>
-
-
         );
     }
 }
-
-export default withRouter(CreateContract);

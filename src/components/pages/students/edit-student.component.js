@@ -1,70 +1,110 @@
 import React, { Component } from "react";
-import { Link, useParams } from 'react-router-dom';
 
 import { Box } from "@mui/system";
-import { Button, Divider, Grid, IconButton, Paper, TextField, Typography } from "@mui/material";
-import ReactBootstrap, { Table } from 'react-bootstrap';
-import UserService from "../services/user.service";
-import EventBus from "../common/EventBus";
-import FiberManualRecordRoundedIcon from '@mui/icons-material/FiberManualRecordRounded';
-import EditRoundedIcon from '@mui/icons-material/EditRounded';
-import DeleteForeverRoundedIcon from '@mui/icons-material/DeleteForeverRounded';
+import { Button, Divider, Grid, Paper, TextField, Typography } from "@mui/material";
+import UserService from "../../../services/user.service";
 import Form from 'react-bootstrap/Form';
 
-import axios from 'axios';
-import authHeader from "../services/auth-header";
-import Toast from "./toast.component";
+import Toast from "../../alerts/toast.component";
 
-import authService from "../services/auth.service";
+import { withRouter } from "../../../common/with-router";
+import userService from "../../../services/user.service";
 
-import RoomService from "../services/RoomService";
-
-export default class AddStudent extends Component {
+class EditStudent extends Component {
     constructor(props) {
         super(props);
 
         this.state = this.initialState;
-        this.state.show = false;
+        this.state.showUpdateStudentAlert = false;
+        this.state.showDeleteStudentAlert = false;
+        this.state.showCantDeleteAlert = false;
         this.studentChange = this.studentChange.bind(this);
-        this.submitStudent = this.submitStudent.bind(this);
+        this.updateStudent = this.updateStudent.bind(this);
     }
 
     initialState = {
         id: '', username: '', email: '', password: '', firstName: '', lastName: '', number: '', academicGroup: '', userStatus: ''
     }
 
+    findStudentById = () => {
+        const { id } = this.props.router.params;
+
+        UserService.getStudentById(id)
+            .then(response => {
+                if (response.data != null) {
+                    this.setState({
+                        id: response.data.id,
+                        username: response.data.username,
+                        email: response.data.email,
+                        firstName: response.data.firstName,
+                        lastName: response.data.lastName,
+                        number: response.data.number,
+                        academicGroup: response.data.academicGroup
+                    })
+                }
+            }).catch((error) => {
+                console.error("Error:" + error);
+            });
+    }
+
+    componentDidMount() {
+        this.findStudentById();
+    }
+
     resetStudent = () => {
         this.setState(() => this.initialState);
     }
 
-    submitStudent = event => {
+    updateStudent = event => {
+        const { id } = this.props.router.params;
         event.preventDefault();
 
         const student = {
-            userStatus: 2,
             username: this.state.username,
             email: this.state.email,
-            password: this.state.password,
             firstName: this.state.firstName,
             lastName: this.state.lastName,
             number: this.state.number,
-            academicGroup: this.state.academicGroup
+            academicGroup: this.state.academicGroup,
+            password: this.state.password
         };
 
-        authService.register(student.username, student.email, student.password, student.firstName, student.lastName, student.number, student.academicGroup, student.userStatus)
+        userService.updateStudent(id, student)
             .then(response => {
                 if (response.data != null) {
-                    this.setState({ "show": true })
-                    setTimeout(() => this.setState({ "show": false }), 5000);
-
+                    this.setState({ "showUpdateStudentAlert": true })
+                    setTimeout(() => this.setState({ "showUpdateStudentAlert": false }), 5000);
+                    setTimeout(() => this.studentsList(), 3000);
                 }
                 else {
-                    this.setState({ "show": false })
+                    this.setState({ "showUpdateStudentAlert": false })
                 }
             });
         this.setState(this.initialState);
+    }
+
+    deleteStudent = event => {
+        const { id } = this.props.router.params;
+        event.preventDefault();
+        console.log(this.state.userStatus)
 
 
+        UserService.deleteStudent(id)
+            .then(response => {
+                if (response.data != null) {
+                    this.setState({ "showDeleteStudentAlert": true })
+                    setTimeout(() => this.setState({ "showDeleteStudentAlert": false }), 5000);
+                    setTimeout(() => this.studentsList(), 3000);
+                }
+                else {
+                    this.setState({ "showDeleteStudentAlert": false })
+                }
+            })
+            .catch(error => {
+                this.setState({ "showCantDeleteAlert": true })
+                setTimeout(() => this.setState({ "showCantDeleteAlert": false }), 5000);
+                console.error(error.response.data);
+            })
     }
 
     studentChange = event => {
@@ -73,14 +113,24 @@ export default class AddStudent extends Component {
         });
     }
 
+    studentsList = () => {
+        return this.props.router.navigate("/students");
+    }
+
     render() {
 
         const { username, email, password, firstName, lastName, number, academicGroup } = this.state;
 
         return (
             <div>
-                <div style={{ "display": this.state.show ? "block" : "none" }}>
-                    <Toast show={this.state.show} message={"Studentas pridėtas sėkmingai!"} type={"success"} />
+                <div style={{ "display": this.state.showUpdateStudentAlert ? "block" : "none" }}>
+                    <Toast show={this.state.showUpdateStudentAlert} message={"Studentas atnaujintas sėkmingai!"} type={"success"} />
+                </div>
+                <div style={{ "display": this.state.showDeleteStudentAlert ? "block" : "none" }}>
+                    <Toast show={this.state.showDeleteStudentAlert} message={"Studentas ištrintas sėkmingai!"} type={"error"} />
+                </div>
+                <div style={{ "display": this.state.showCantDeleteAlert ? "block" : "none" }}>
+                    <Toast show={this.state.showCantDeleteAlert} message={"Studento ištrinti negalima, nes šis studentas, turi sutartį!"} type={"warning"} />
                 </div>
                 <Box>
                     <Box
@@ -105,12 +155,12 @@ export default class AddStudent extends Component {
                                 <Grid item xs={8} sm container>
                                     <Grid item xs container direction="column" spacing={2}>
                                         <Grid item>
-                                            <Typography gutterBottom variant="subtitle1" component="div">Naujo studento pridėjimas</Typography>
+                                            <Typography gutterBottom variant="subtitle1" component="div">Studento redagavimas</Typography>
                                             <Divider />
                                         </Grid>
                                         <Grid item xs container direction="column" spacing={2}>
                                             <Grid item>
-                                                <Form onReset={this.resetStudent} onSubmit={this.submitStudent} id="roomFormId">
+                                                <Form onReset={this.resetStudent} onSubmit={this.updateStudent} id="roomFormId">
                                                     <Grid item>
                                                         <Grid item paddingBottom={2}>
                                                             <Typography gutterBottom variant="subtitle1" component="div" paddingLeft={2}>Asmeninė informacija</Typography>
@@ -206,7 +256,7 @@ export default class AddStudent extends Component {
                                                                             type={"password"}
                                                                             required
                                                                             id="outlined-required"
-                                                                            label="Slaptažodis"
+                                                                            label="Naujas slaptažodis"
                                                                             InputProps={{
                                                                                 autoComplete: "new-password"
                                                                             }}
@@ -223,7 +273,7 @@ export default class AddStudent extends Component {
                                                                             required
                                                                             type={"password"}
                                                                             id="outlined-required"
-                                                                            label="Pakartokite slaptažodį"
+                                                                            label="Pakartokite naują slaptažodį"
                                                                             InputProps={{
                                                                                 autoComplete: "new-password"
                                                                             }}
@@ -278,12 +328,18 @@ export default class AddStudent extends Component {
                                                             </div>
                                                         </Grid>
                                                         <Grid item paddingTop={2}>
+                                                            <Divider />
+                                                        </Grid>
+                                                        <Grid item paddingTop={2}>
                                                             <div class="row">
                                                                 <div class="col-sm">
-                                                                    <Button variant="outlined" color="success" type="submit" fullWidth ><span>Pridėti naują studentą</span></Button>{' '}
+                                                                    <Button variant="outlined" color="success" type="submit" fullWidth ><span>Atnaujinti studento informaciją</span></Button>{' '}
                                                                 </div>
                                                                 <div class="col-sm">
                                                                     <Button variant="outlined" color="info" type="reset" fullWidth ><span>Išvalyti</span></Button>
+                                                                </div>
+                                                                <div class="col-sm">
+                                                                    <Button variant="outlined" color="info" onClick={this.deleteStudent} fullWidth ><span>Ištrinti</span></Button>
                                                                 </div>
                                                             </div>
                                                         </Grid>
@@ -307,3 +363,5 @@ export default class AddStudent extends Component {
         );
     }
 }
+
+export default withRouter(EditStudent);
