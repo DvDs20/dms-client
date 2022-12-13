@@ -1,27 +1,19 @@
-import React, { Component, useState } from "react";
+import React, { Component } from "react";
 import Form from "react-validation/build/form";
-import Input from "react-validation/build/input";
+
 import CheckButton from "react-validation/build/button";
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Alert from '@mui/material/Alert';
-import "../App.css"
+import "../../App.css";
 
-import AuthService from "../services/auth.service";
-
-import { withRouter } from '../common/with-router';
-import { height } from "@mui/system";
+import AuthService from "../../services/auth.service";
+import { withRouter } from '../../common/with-router';
 
 function Copyright(props) {
   return (
@@ -34,16 +26,6 @@ function Copyright(props) {
     </Typography>
   );
 }
-
-const required = value => {
-  if (!value) {
-    return (
-      <div role="alert">
-        <Alert severity="warning">This field is required!</Alert>
-      </div>
-    );
-  }
-};
 
 const theme = createTheme();
 
@@ -97,7 +79,7 @@ class Login extends Component {
               error.response.data.message) ||
             error.message ||
             error.toString();
-          if (resMessage == "Bad credentials") {
+          if (resMessage === "Bad credentials") {
             resMessage = "Blogi prisijungimo duomenys! Patikrinkite ir bandykite iš naujo"
           }
 
@@ -145,7 +127,6 @@ class Login extends Component {
                 name="username"
                 value={this.state.username}
                 onChange={this.onChangeUsername}
-              // validations={[required]}
               />
 
 
@@ -154,14 +135,12 @@ class Login extends Component {
                   marginBottom: 4
                 }}
                 size="small"
-                // margin="normal"
                 label="Slaptažodis"
                 type="password"
                 className="form-control"
                 name="password"
                 value={this.state.password}
                 onChange={this.onChangePassword}
-              // validations={[required]}
               />
 
 

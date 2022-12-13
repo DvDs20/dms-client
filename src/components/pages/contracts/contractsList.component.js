@@ -1,23 +1,15 @@
-import React, { Component, useState } from "react";
+import React, { Component } from "react";
 import { Link } from 'react-router-dom';
 
-
-
-
-import UserService from "../services/user.service";
-import EventBus from "../common/EventBus";
 import { Box } from "@mui/system";
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Divider, Grid, IconButton, Paper, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, Typography } from "@mui/material";
-import ReactBootstrap, { Table } from 'react-bootstrap';
+import { Button, Divider, Grid, Paper, Typography } from "@mui/material";
+import { Table } from 'react-bootstrap';
 
 import FiberManualRecordRoundedIcon from '@mui/icons-material/FiberManualRecordRounded';
-import EditRoundedIcon from '@mui/icons-material/EditRounded';
-import DeleteForeverRoundedIcon from '@mui/icons-material/DeleteForeverRounded';
-import Toast from "./toast.component";
+import Toast from "../../alerts/toast.component";
 
-import { AlignHorizontalCenter } from "@mui/icons-material";
-import { withRouter } from '../common/with-router';
-import ContractsService from "../services/ContractsService";
+import { withRouter } from '../../../common/with-router';
+import ContractsService from "../../../services/ContractsService";
 
 class RoomsList extends Component {
     constructor(props) {
@@ -87,7 +79,7 @@ class RoomsList extends Component {
                                                                             <span style={{ color: '#1E71C9' }} >{contract.contractNumber}</span>
                                                                         </Link>
                                                                     </td>
-                                                                    <td> {contract.status == 0 ?
+                                                                    <td> {contract.status === 0 ?
                                                                         (<span style={{ backgroundColor: 'rgba(227, 30, 16, 0.3)', borderRadius: 12, padding: 4, margin: 10 }} ><FiberManualRecordRoundedIcon color="error" fontSize="small" />Nepasirašyta</span>) :
                                                                         <span style={{ backgroundColor: 'rgba(47, 122, 32, 0.3)', borderRadius: 12, padding: 4, margin: 10 }} ><FiberManualRecordRoundedIcon color="success" fontSize="small" />Pasirašyta</span>} </td>
                                                                     <td> {contract.expireDate} </td>

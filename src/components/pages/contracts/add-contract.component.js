@@ -1,27 +1,13 @@
-import React, { Component, useState } from "react";
-import { Link, useParams } from 'react-router-dom';
+import React, { Component } from "react";
 
 import { Box } from "@mui/system";
-import { Button, Divider, Grid, IconButton, MenuItem, Paper, Select, TextField, Typography, InputLabel } from "@mui/material";
-import ReactBootstrap, { Table } from 'react-bootstrap';
-import UserService from "../services/user.service";
-import EventBus from "../common/EventBus";
-import FiberManualRecordRoundedIcon from '@mui/icons-material/FiberManualRecordRounded';
-import EditRoundedIcon from '@mui/icons-material/EditRounded';
-import DeleteForeverRoundedIcon from '@mui/icons-material/DeleteForeverRounded';
+import { Button, Divider, Grid, MenuItem, Paper, Select, TextField, Typography, InputLabel } from "@mui/material";
 import Form from 'react-bootstrap/Form';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
+import Toast from "../../alerts/toast.component";
 
-import axios from 'axios';
-import authHeader from "../services/auth-header";
-import Toast from "./toast.component";
-
-import RoomService from "../services/RoomService";
-import LookupService from "../services/LookupService";
-import ContractsService from "../services/ContractsService";
-import { withRouter } from "../common/with-router";
+import LookupService from "../../../services/LookupService";
+import ContractsService from "../../../services/ContractsService";
+import { withRouter } from "../../../common/with-router";
 
 class AddContract extends Component {
     constructor(props) {
@@ -93,8 +79,6 @@ class AddContract extends Component {
     render() {
 
         const { expireDate, studentId, roomId } = this.state;
-        // const optionsOfStudents.studentId = this.state.optionsOfStudents.studentId;
-        // const roomId = this.state.optionsOfRooms.roomId;
 
         return (
             <div>

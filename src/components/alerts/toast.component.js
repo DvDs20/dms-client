@@ -5,8 +5,6 @@ import Alert from '@mui/material/Alert';
 
 export default class Toast extends Component {
 
-
-
     render() {
         return (
             <Snackbar open={this.props.show} autoHideDuration={6000}>

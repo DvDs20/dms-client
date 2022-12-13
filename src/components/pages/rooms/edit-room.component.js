@@ -1,25 +1,13 @@
 import React, { Component } from "react";
-import { Link, useLocation, useParams } from 'react-router-dom';
 
 import { Box } from "@mui/system";
-import { Button, Dialog, Divider, Grid, IconButton, Paper, TextField, Typography, DialogTitle, DialogContent, DialogContentText, DialogActions } from "@mui/material";
-import ReactBootstrap, { Table } from 'react-bootstrap';
-import UserService from "../services/user.service";
-import EventBus from "../common/EventBus";
-import FiberManualRecordRoundedIcon from '@mui/icons-material/FiberManualRecordRounded';
-import EditRoundedIcon from '@mui/icons-material/EditRounded';
-import DeleteForeverRoundedIcon from '@mui/icons-material/DeleteForeverRounded';
+import { Button, Divider, Grid, Paper, TextField, Typography } from "@mui/material";
 import Form from 'react-bootstrap/Form';
 
+import Toast from "../../alerts/toast.component";
 
-import axios from 'axios';
-import authHeader from "../services/auth-header";
-import Toast from "./toast.component";
-
-import RoomService from "../services/RoomService";
-import withRouter1 from "../hooks/withRouter";
-import { withRouter } from '../common/with-router';
-import RoomsList from "./roomsList.component";
+import RoomService from "../../../services/RoomService";
+import { withRouter } from '../../../common/with-router';
 
 class EditRoom extends Component {
     constructor(props) {

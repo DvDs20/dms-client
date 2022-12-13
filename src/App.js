@@ -1,9 +1,7 @@
-import React, { Component, useState } from "react";
+import React, { Component } from "react";
 import { Routes, Route, Link } from "react-router-dom";
 import "./App.css";
 import Button from '@mui/material/Button';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
 import PersonRoundedIcon from '@mui/icons-material/PersonRounded';
 import ExitToAppRoundedIcon from '@mui/icons-material/ExitToAppRounded';
 import AccountBoxRoundedIcon from '@mui/icons-material/AccountBoxRounded';
@@ -13,29 +11,24 @@ import ArticleRoundedIcon from '@mui/icons-material/ArticleRounded';
 
 import AuthService from "./services/auth.service";
 
-import Login from "./components/login.component";
-import Register from "./components/register.component";
-import Home from "./components/home.component";
-import Profile from "./components/profile.component";
-import BoardStudent from "./components/board-student.component";
-import BoardModerator from "./components/board-moderator.component";
+import Login from "./components/login/login.component";
+import Home from "./components/pages/home/home.component";
+import Profile from "./components/pages/profile/profile.component";
 import BoardAdmin from "./components/board-admin.component";
-import StudentsList from "./components/studentsList.components";
-import RoomsList from "./components/roomsList.component";
-import AddRoom from "./components/add-room.component";
-import EditRoom from "./components/edit-room.component";
-import AddStudent from "./components/add-student.component";
+import StudentsList from "./components/pages/students/studentsList.components";
+import RoomsList from "./components/pages/rooms/roomsList.component";
+import AddRoom from "./components/pages/rooms/add-room.component";
+import EditRoom from "./components/pages/rooms/edit-room.component";
+import AddStudent from "./components/pages/students/add-student.component";
 
-import BasicMenu from "./components/menu/dropdown-button";
 
 import MyLogo from "./assets/logo.png";
 
 import EventBus from "./common/EventBus";
-import CreateContract from "./components/create-contract.component";
-import EditStudent from "./components/edit-student.component";
-import ContractsList from "./components/contractsList.component";
-import AddContract from "./components/add-contract.component";
-import InfoContract from "./components/info-contract.component";
+import EditStudent from "./components/pages/students/edit-student.component";
+import ContractsList from "./components/pages/contracts/contractsList.component";
+import AddContract from "./components/pages/contracts/add-contract.component";
+import InfoContract from "./components/pages/contracts/info-contract.component";
 
 
 class App extends Component {
@@ -50,6 +43,7 @@ class App extends Component {
       showStudentsList: false,
       showRoomsList: false,
       showContractsList: false,
+      showContractForStudent: false,
       currentUser: undefined,
     };
   }
@@ -66,6 +60,7 @@ class App extends Component {
         showStudentsList: user.roles.includes("ROLE_ADMIN"),
         showRoomsList: user.roles.includes("ROLE_ADMIN"),
         showContractsList: user.roles.includes("ROLE_ADMIN"),
+        showContractForStudent: user.roles.includes("ROLE_STUDENT"),
       });
     }
 
@@ -87,13 +82,14 @@ class App extends Component {
       showStudentsList: false,
       showRoomsList: false,
       showContractsList: false,
+      showContractForStudent: false,
       currentUser: undefined,
     });
   }
 
 
   render() {
-    const { currentUser, showModeratorBoard, showAdminBoard, showStudentBoard, showStudentsList, showRoomsList, showContractsList } = this.state;
+    const { currentUser, showModeratorBoard, showAdminBoard, showStudentBoard, showStudentsList, showRoomsList, showContractsList, showContractForStudent } = this.state;
     return (
       <div>
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -170,6 +166,17 @@ class App extends Component {
               </li>
             )}
 
+            {showContractForStudent && (
+              <li className="nav-item">
+                <Link to={"/contract/info"} className="nav-link">
+                  <Button>
+                    <ArticleRoundedIcon />
+                    <span>Kontraktas</span>
+                  </Button>
+                </Link>
+              </li>
+            )}
+
           </div>
 
           {currentUser ? (
@@ -218,11 +225,7 @@ class App extends Component {
             <Route path="/" element={<Home />} />
             <Route path="/home" element={<Home />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
             <Route path="/profile" element={<Profile />} />
-            <Route path="/student" element={<BoardStudent />} />
-            <Route path="/user" element={<BoardStudent />} />
-            <Route path="/mod" element={<BoardModerator />} />
             <Route path="/admin" element={<BoardAdmin />} />
             <Route path="/students" element={<StudentsList />} />
             <Route path="/rooms" element={<RoomsList />} />
