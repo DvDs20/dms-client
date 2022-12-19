@@ -19,6 +19,7 @@ class InfoContract extends Component {
         this.state.showDeleteContractAlarm = false;
         this.state.responseStatus = "";
         this.state.currentUser = { id: "" };
+        this.state.showAssignAlert = false;
     }
 
     initialState = {
@@ -52,6 +53,21 @@ class InfoContract extends Component {
             });
     }
 
+    assignContract = event => {
+        event.preventDefault();
+
+        const currentUser = authService.getCurrentUser();
+        const contract = null;
+        ContractsService.assignContract(currentUser.id, contract)
+            .then(response => {
+                if (response.data != null) {
+                    this.setState({ "showAssignAlert": true })
+                    setTimeout(() => this.setState({ "showAssignAlert": false }), 5000);
+                    window.location.reload();
+                }
+            })
+    }
+
     componentDidMount() {
         this.findContractById();
     }
@@ -63,8 +79,8 @@ class InfoContract extends Component {
 
         return (
             <div>
-                <div style={{ "display": this.state.showDeleteContractAlarm ? "block" : "none" }}>
-                    <Toast show={this.state.showDeleteContractAlarm} message={"Sutartis sėkmingai ištrinta"} type={"error"} />
+                <div style={{ "display": this.state.showAssignAlert ? "block" : "none" }}>
+                    <Toast show={this.state.showAssignAlert} message={"Sutartis pasirašyta sėkmingai!"} type={"success"} />
                 </div>
                 {
                     responseStatus === 404 ?
@@ -176,7 +192,7 @@ class InfoContract extends Component {
                                                                             <div class="col-sm">
                                                                                 {
                                                                                     contractStatus === 0 ?
-                                                                                        <Button variant="outlined" color="success" onClick={this.deleteContract} fullWidth ><span>Pasirašyti sutartį</span></Button> :
+                                                                                        <Button variant="outlined" color="success" onClick={this.assignContract} fullWidth ><span>Pasirašyti sutartį</span></Button> :
                                                                                         <div></div>
                                                                                 }
 

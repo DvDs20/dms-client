@@ -25,6 +25,10 @@ class ContractsService {
         return axios.get(CONTRACT_API_BASE_URL + '/student-contract/' + studentId, { headers: authHeader() });
     }
 
+    assignContract(studentId, contract) {
+        return axios.put(CONTRACT_API_BASE_URL + '/student-contract/' + studentId, contract, { headers: authHeader() });
+    }
+
 }
 
 export default new ContractsService()
