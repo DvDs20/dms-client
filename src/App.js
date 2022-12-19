@@ -29,6 +29,7 @@ import EditStudent from "./components/pages/students/edit-student.component";
 import ContractsList from "./components/pages/contracts/contractsList.component";
 import AddContract from "./components/pages/contracts/add-contract.component";
 import InfoContract from "./components/pages/contracts/info-contract.component";
+import ContractInfoForStudentComponent from "./components/pages/contracts/contract-info-for-student.component";
 
 
 class App extends Component {
@@ -168,7 +169,7 @@ class App extends Component {
 
             {showContractForStudent && (
               <li className="nav-item">
-                <Link to={"/contract/info"} className="nav-link">
+                <Link to={"/student-contract"} className="nav-link">
                   <Button>
                     <ArticleRoundedIcon />
                     <span>Kontraktas</span>
@@ -236,6 +237,7 @@ class App extends Component {
             <Route path="/contracts" element={<ContractsList />} />
             <Route path="/add-contract" element={<AddContract />} />
             <Route path="/contracts/info/:id" element={<InfoContract />} />
+            <Route path="/student-contract" element={<ContractInfoForStudentComponent />} />
           </Routes>
         </div>
 

@@ -339,7 +339,7 @@ class EditStudent extends Component {
                                                                     <Button variant="outlined" color="info" type="reset" fullWidth ><span>Išvalyti</span></Button>
                                                                 </div>
                                                                 <div class="col-sm">
-                                                                    <Button variant="outlined" color="info" onClick={this.deleteStudent} fullWidth ><span>Ištrinti</span></Button>
+                                                                    <Button variant="outlined" color="error" onClick={this.deleteStudent} fullWidth ><span>Ištrinti</span></Button>
                                                                 </div>
                                                             </div>
                                                         </Grid>

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 import { Box } from "@mui/system";
-import { Button, Divider, Grid, MenuItem, Paper, Select, TextField, Typography, InputLabel } from "@mui/material";
+import { Button, Divider, Grid, MenuItem, Paper, Select, TextField, Typography, InputLabel, InputAdornment } from "@mui/material";
 import Form from 'react-bootstrap/Form';
 import Toast from "../../alerts/toast.component";
 
@@ -24,7 +24,7 @@ class AddContract extends Component {
     }
 
     initialState = {
-        id: '', studentId: '', roomId: '', expireDate: ''
+        id: '', studentId: '', roomId: '', expireDate: '', priceForStudent: ''
     }
 
     resetContract = () => {
@@ -38,6 +38,7 @@ class AddContract extends Component {
             studentId: this.state.studentId,
             roomId: this.state.roomId,
             expireDate: this.state.expireDate,
+            priceForStudent: this.state.priceForStudent
         };
 
         ContractsService.addNewContract(contract)
@@ -78,7 +79,7 @@ class AddContract extends Component {
 
     render() {
 
-        const { expireDate, studentId, roomId } = this.state;
+        const { expireDate, studentId, roomId, priceForStudent } = this.state;
 
         return (
             <div>
@@ -176,6 +177,24 @@ class AddContract extends Component {
                                                                         type={"date"}
                                                                         InputProps={{
                                                                             autoComplete: "off"
+                                                                        }}
+                                                                    >
+                                                                    </TextField>
+                                                                </div>
+                                                                <div class="col-sm" >
+                                                                    <InputLabel id="room-select-label">Kaina studentui per mėnesį</InputLabel>
+                                                                    <TextField
+                                                                        name="priceForStudent"
+                                                                        value={priceForStudent}
+                                                                        onChange={this.contractChange}
+                                                                        fullWidth
+                                                                        required
+                                                                        id="outlined-required"
+                                                                        type={"number"}
+                                                                        InputProps={{
+                                                                            autoComplete: "off",
+                                                                            inputProps: { min: 10, max: 100 },
+                                                                            startAdornment: <InputAdornment position="start">€</InputAdornment>,
                                                                         }}
                                                                     >
                                                                     </TextField>
