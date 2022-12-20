@@ -8,6 +8,7 @@ import AccountBoxRoundedIcon from '@mui/icons-material/AccountBoxRounded';
 import PeopleAltRoundedIcon from '@mui/icons-material/PeopleAltRounded';
 import MeetingRoomRoundedIcon from '@mui/icons-material/MeetingRoomRounded';
 import ArticleRoundedIcon from '@mui/icons-material/ArticleRounded';
+import MarkunreadMailboxRoundedIcon from '@mui/icons-material/MarkunreadMailboxRounded';
 
 import AuthService from "./services/auth.service";
 
@@ -30,6 +31,7 @@ import ContractsList from "./components/pages/contracts/contractsList.component"
 import AddContract from "./components/pages/contracts/add-contract.component";
 import InfoContract from "./components/pages/contracts/info-contract.component";
 import ContractInfoForStudentComponent from "./components/pages/contracts/contract-info-for-student.component";
+import ParcelsListComponents from "./components/pages/parcels/parcelsList.components";
 
 
 class App extends Component {
@@ -45,6 +47,7 @@ class App extends Component {
       showRoomsList: false,
       showContractsList: false,
       showContractForStudent: false,
+      showParcelsList: false,
       currentUser: undefined,
     };
   }
@@ -62,6 +65,7 @@ class App extends Component {
         showRoomsList: user.roles.includes("ROLE_ADMIN"),
         showContractsList: user.roles.includes("ROLE_ADMIN"),
         showContractForStudent: user.roles.includes("ROLE_STUDENT"),
+        showParcelsList: user.roles.includes("ROLE_ADMIN"),
       });
     }
 
@@ -84,13 +88,14 @@ class App extends Component {
       showRoomsList: false,
       showContractsList: false,
       showContractForStudent: false,
+      showParcelsList: false,
       currentUser: undefined,
     });
   }
 
 
   render() {
-    const { currentUser, showModeratorBoard, showAdminBoard, showStudentBoard, showStudentsList, showRoomsList, showContractsList, showContractForStudent } = this.state;
+    const { currentUser, showModeratorBoard, showAdminBoard, showStudentBoard, showStudentsList, showRoomsList, showContractsList, showContractForStudent, showParcelsList } = this.state;
     return (
       <div>
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -178,6 +183,18 @@ class App extends Component {
               </li>
             )}
 
+            {showParcelsList && (
+              <li className="nav-item">
+                <Link to={"/parcels"} className="nav-link">
+                  <Button>
+                    <MarkunreadMailboxRoundedIcon />
+                    <span>Siuntos</span>
+                  </Button>
+                </Link>
+              </li>
+            )}
+
+
           </div>
 
           {currentUser ? (
@@ -238,6 +255,7 @@ class App extends Component {
             <Route path="/add-contract" element={<AddContract />} />
             <Route path="/contracts/info/:id" element={<InfoContract />} />
             <Route path="/student-contract" element={<ContractInfoForStudentComponent />} />
+            <Route path="/parcels" element={<ParcelsListComponents />} />
           </Routes>
         </div>
 
