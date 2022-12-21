@@ -20,7 +20,8 @@ class ParcelsList extends Component {
 
         this.state = {
             parcels: [],
-            open: false
+            open: false,
+            showDeleteAlert: false
         };
     }
 
@@ -42,12 +43,26 @@ class ParcelsList extends Component {
         })
     }
 
+    deleteParcelMessage = (parcelId) => {
+        ParcelsService.deleteParcelMessage(parcelId)
+            .then(response => {
+                if (response.data != null) {
+                    this.setState({ "showDeleteAlert": true })
+                    setTimeout(() => this.setState({ "showDeleteAlert": false }), 5000);
+                    window.location.reload();
+                }
+                else {
+                    this.setState({ "showDeleteAlert": false })
+                }
+            });
+    };
+
     render() {
         return (
 
             <div>
                 <div style={{ "display": this.state.show ? "block" : "none" }}>
-                    <Toast show={this.state.show} message={"Kambarys ištrintas sėkmingai!"} type={"error"} />
+                    <Toast show={this.state.show} message={"Siuntos pranešimas sėkmingai ištrintas"} type={"error"} />
                 </div>
                 <Box>
                     <Box
@@ -80,7 +95,7 @@ class ParcelsList extends Component {
                                             {
                                                 this.state.parcels.map(
                                                     parcel =>
-                                                        <div>
+                                                        <div key={parcel.id}>
                                                             <Card sx={{
                                                                 marginTop: 2,
                                                                 padding: 2,
@@ -88,7 +103,6 @@ class ParcelsList extends Component {
                                                                 backgroundColor: (theme) =>
                                                                     theme.palette.mode === 'dark' ? '#1A2027' : '#F2F2F2',
                                                             }}
-                                                                key={parcel.id}
                                                             >
                                                                 <CardContent>
                                                                     <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
@@ -101,7 +115,7 @@ class ParcelsList extends Component {
                                                                     <Typography variant="body2">{parcel.message}</Typography>
                                                                 </CardContent>
                                                                 <CardActions>
-                                                                    <Button size="small" color="error">Trinti pranešimą</Button>
+                                                                    <Button size="small" color="error" onClick={this.deleteParcelMessage.bind(this, parcel.id)}>Trinti pranešimą</Button>
                                                                     <Button size="small" color="info" onClick={this.handleClickOpen} >Susisiekti su studentu</Button>
                                                                 </CardActions>
 
