@@ -14,6 +14,11 @@ class LookupService {
         return axios.get(API_BASE_URL + 'free-rooms',
             { headers: authHeader() });
     }
+
+    getAvailableStudentsListWhichDoNotHaveParcelMessage() {
+        return axios.get(API_BASE_URL + 'students-which-do-not-have-parcel-message',
+            { headers: authHeader() });
+    }
 }
 
 export default new LookupService()

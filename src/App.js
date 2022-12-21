@@ -32,6 +32,7 @@ import AddContract from "./components/pages/contracts/add-contract.component";
 import InfoContract from "./components/pages/contracts/info-contract.component";
 import ContractInfoForStudentComponent from "./components/pages/contracts/contract-info-for-student.component";
 import ParcelsListComponents from "./components/pages/parcels/parcelsList.components";
+import AddNewParcelMessage from "./components/pages/parcels/add-new-parcel-message.component";
 
 
 class App extends Component {
@@ -256,6 +257,7 @@ class App extends Component {
             <Route path="/contracts/info/:id" element={<InfoContract />} />
             <Route path="/student-contract" element={<ContractInfoForStudentComponent />} />
             <Route path="/parcels" element={<ParcelsListComponents />} />
+            <Route path="/create-new-parcel-message" element={<AddNewParcelMessage />} />
           </Routes>
         </div>
 

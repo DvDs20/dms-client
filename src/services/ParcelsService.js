@@ -12,6 +12,10 @@ class ParcelService {
     deleteParcelMessage(parcelId) {
         return axios.delete(PARCEL_API_BASE_URL + "/" + parcelId, { headers: authHeader() });
     }
+
+    createNewParcelMessage(parcel) {
+        return axios.post(PARCEL_API_BASE_URL, parcel, { headers: authHeader() });
+    }
 }
 
 export default new ParcelService()
