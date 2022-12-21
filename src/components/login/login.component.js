@@ -18,9 +18,9 @@ import { withRouter } from '../../common/with-router';
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
+      {'Visos teisės saugomos © '}
       <Link color="inherit" href="http://localhost:8081/login">
-        Dormintory Management System
+        Bendrabučio valdymo sistema
       </Link>{' '}
       {new Date().getFullYear()}
     </Typography>
