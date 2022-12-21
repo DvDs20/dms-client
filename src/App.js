@@ -15,7 +15,6 @@ import AuthService from "./services/auth.service";
 import Login from "./components/login/login.component";
 import Home from "./components/pages/home/home.component";
 import Profile from "./components/pages/profile/profile.component";
-import BoardAdmin from "./components/board-admin.component";
 import StudentsList from "./components/pages/students/studentsList.components";
 import RoomsList from "./components/pages/rooms/roomsList.component";
 import AddRoom from "./components/pages/rooms/add-room.component";
@@ -82,8 +81,6 @@ class App extends Component {
   logOut() {
     AuthService.logout();
     this.setState({
-      showModeratorBoard: false,
-      showAdminBoard: false,
       showStudentBoard: false,
       showStudentsList: false,
       showRoomsList: false,
@@ -109,26 +106,6 @@ class App extends Component {
             />
           </Link>
           <div className="navbar-nav mr-auto">
-
-            {showModeratorBoard && (
-              <li className="nav-item">
-                <Link to={"/mod"} className="nav-link">
-                  <Button>
-                    Moderatorius
-                  </Button>
-                </Link>
-              </li>
-            )}
-
-            {showAdminBoard && (
-              <li className="nav-item">
-                <Link to={"/admin"} className="nav-link">
-                  <Button>
-                    Administratorius
-                  </Button>
-                </Link>
-              </li>
-            )}
 
             {showStudentsList && (
               <li className="nav-item">
@@ -242,7 +219,6 @@ class App extends Component {
             <Route path="/home" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/profile" element={<Profile />} />
-            <Route path="/admin" element={<BoardAdmin />} />
             <Route path="/students" element={<StudentsList />} />
             <Route path="/rooms" element={<RoomsList />} />
             <Route path="/add-room" element={<AddRoom />} />
