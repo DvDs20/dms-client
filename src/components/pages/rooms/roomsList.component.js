@@ -1,10 +1,16 @@
 import React, { Component } from "react";
 import { Link } from 'react-router-dom';
 import { Box } from "@mui/system";
-import { Button, Divider, Grid, Paper, Typography } from "@mui/material";
-import { Table } from 'react-bootstrap';
+import { Button, ButtonGroup, Divider, Grid, Paper, TextField, Typography } from "@mui/material";
+import { FormControl, InputGroup, Table } from 'react-bootstrap';
 
 import FiberManualRecordRoundedIcon from '@mui/icons-material/FiberManualRecordRounded';
+import KeyboardArrowLeftRoundedIcon from '@mui/icons-material/KeyboardArrowLeftRounded';
+import KeyboardDoubleArrowRightRoundedIcon from '@mui/icons-material/KeyboardDoubleArrowRightRounded';
+import KeyboardArrowRightRoundedIcon from '@mui/icons-material/KeyboardArrowRightRounded';
+import KeyboardDoubleArrowLeftRoundedIcon from '@mui/icons-material/KeyboardDoubleArrowLeftRounded';
+
+import ArrowForwardIosRoundedIcon from '@mui/icons-material/ArrowForwardIosRounded';
 import Toast from "../../alerts/toast.component";
 
 import RoomService from "../../../services/RoomService";
@@ -15,7 +21,9 @@ class RoomsList extends Component {
         super(props);
 
         this.state = {
-            rooms: []
+            rooms: [],
+            currentPage: 1,
+            roomsPerPage: 8
         };
     }
 
@@ -26,7 +34,52 @@ class RoomsList extends Component {
         });
     }
 
+    changePage = event => {
+        this.setState({
+            [event.target.name]: parseInt(event.target.value)
+        })
+    }
+
+    firstPage = () => {
+        if (this.state.currentPage > 1) {
+            this.setState({
+                currentPage: 1
+            });
+        }
+    }
+
+    prevPage = () => {
+        if (this.state.currentPage > 1) {
+            this.setState({
+                currentPage: this.state.currentPage - 1
+            });
+        }
+    }
+
+    lastPage = () => {
+        if (this.state.currentPage < Math.ceil(this.state.rooms.length / this.state.roomsPerPage)) {
+            this.setState({
+                currentPage: Math.ceil(this.state.rooms.length / this.state.roomsPerPage)
+            });
+        }
+    }
+
+    nextPage = () => {
+        if (this.state.currentPage < Math.ceil(this.state.rooms.length / this.state.roomsPerPage)) {
+            this.setState({
+                currentPage: this.state.currentPage + 1
+            });
+        }
+    }
+
     render() {
+
+        const { rooms, currentPage, roomsPerPage } = this.state;
+        const lastIndex = currentPage * roomsPerPage;
+        const firstIndex = lastIndex - roomsPerPage;
+        const currentRooms = rooms.slice(firstIndex, lastIndex);
+        const totalPages = Math.ceil(rooms.length / roomsPerPage);
+
         return (
 
             <div>
@@ -72,7 +125,7 @@ class RoomsList extends Component {
                                                 </thead>
                                                 <tbody>
                                                     {
-                                                        this.state.rooms.map(
+                                                        currentRooms.map(
                                                             room =>
                                                                 <tr key={room.id}>
                                                                     <td>
@@ -95,6 +148,33 @@ class RoomsList extends Component {
                                                     }
                                                 </tbody>
                                             </Table>
+                                        </Grid>
+                                        <Grid item paddingTop={2}>
+                                            <div style={{ "float": "left" }}>
+                                                Rodomas puslapis {currentPage} iš {totalPages}
+                                            </div>
+                                            <div style={{ "float": "right" }}>
+                                                <Box
+                                                    sx={{
+                                                        display: 'flex',
+                                                        flexDirection: 'column',
+                                                        alignItems: 'center',
+                                                        '& > *:': {
+                                                            m: 1
+                                                        },
+                                                    }}
+                                                >
+                                                    <ButtonGroup variant="outlined" aria-label="outlined button group">
+                                                        <Button disabled={currentPage === 1 ? true : false} onClick={this.firstPage} ><KeyboardDoubleArrowLeftRoundedIcon /></Button>
+                                                        <Button disabled={currentPage === 1 ? true : false} onClick={this.prevPage} ><KeyboardArrowLeftRoundedIcon /></Button>
+                                                        <TextField sx={{ width: 50 }} size="small" length="20" name="currentPage" value={currentPage} onChange={this.changePage} InputProps={{
+                                                            readOnly: true,
+                                                        }}></TextField>
+                                                        <Button disabled={currentPage === totalPages ? true : false} onClick={this.nextPage} ><KeyboardArrowRightRoundedIcon /></Button>
+                                                        <Button disabled={currentPage === totalPages ? true : false} onClick={this.lastPage} ><KeyboardDoubleArrowRightRoundedIcon /></Button>
+                                                    </ButtonGroup>
+                                                </Box>
+                                            </div>
                                         </Grid>
                                         <Grid item>
                                             <Link to={"/add-room"}

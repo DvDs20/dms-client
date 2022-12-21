@@ -1,13 +1,17 @@
 import React, { Component } from "react";
 import { Link } from 'react-router-dom';
 import { Box } from "@mui/system";
-import { Button, Card, CardContent, CardActions, Divider, Grid, Paper, Typography, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, TextField, IconButton } from "@mui/material";
+import { Button, Card, CardContent, CardActions, Divider, Grid, Paper, Typography, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, TextField, IconButton, ButtonGroup } from "@mui/material";
 import { Table } from 'react-bootstrap';
 
 import FiberManualRecordRoundedIcon from '@mui/icons-material/FiberManualRecordRounded';
 import MarkunreadMailboxRoundedIcon from '@mui/icons-material/MarkunreadMailboxRounded';
 import DeleteForeverRoundedIcon from '@mui/icons-material/DeleteForeverRounded';
 import ContentCopyRoundedIcon from '@mui/icons-material/ContentCopyRounded';
+import KeyboardArrowLeftRoundedIcon from '@mui/icons-material/KeyboardArrowLeftRounded';
+import KeyboardDoubleArrowRightRoundedIcon from '@mui/icons-material/KeyboardDoubleArrowRightRounded';
+import KeyboardArrowRightRoundedIcon from '@mui/icons-material/KeyboardArrowRightRounded';
+import KeyboardDoubleArrowLeftRoundedIcon from '@mui/icons-material/KeyboardDoubleArrowLeftRounded';
 import Toast from "../../alerts/toast.component";
 
 import RoomService from "../../../services/RoomService";
@@ -21,7 +25,9 @@ class ParcelsList extends Component {
         this.state = {
             parcels: [],
             open: false,
-            showDeleteAlert: false
+            showDeleteAlert: false,
+            currentPage: 1,
+            parcelsMessagesPerPage: 1
         };
     }
 
@@ -57,7 +63,52 @@ class ParcelsList extends Component {
             });
     };
 
+    changePage = event => {
+        this.setState({
+            [event.target.name]: parseInt(event.target.value)
+        })
+    }
+
+    firstPage = () => {
+        if (this.state.currentPage > 1) {
+            this.setState({
+                currentPage: 1
+            });
+        }
+    }
+
+    prevPage = () => {
+        if (this.state.currentPage > 1) {
+            this.setState({
+                currentPage: this.state.currentPage - 1
+            });
+        }
+    }
+
+    lastPage = () => {
+        if (this.state.currentPage < Math.ceil(this.state.parcels.length / this.state.parcelsMessagesPerPage)) {
+            this.setState({
+                currentPage: Math.ceil(this.state.parcels.length / this.state.parcelsMessagesPerPage)
+            });
+        }
+    }
+
+    nextPage = () => {
+        if (this.state.currentPage < Math.ceil(this.state.parcels.length / this.state.parcelsMessagesPerPage)) {
+            this.setState({
+                currentPage: this.state.currentPage + 1
+            });
+        }
+    }
+
     render() {
+
+        const { parcels, currentPage, parcelsMessagesPerPage } = this.state;
+        const lastIndex = currentPage * parcelsMessagesPerPage;
+        const firstIndex = lastIndex - parcelsMessagesPerPage;
+        const currentParcels = parcels.slice(firstIndex, lastIndex);
+        const totalPages = Math.ceil(parcels.length / parcelsMessagesPerPage);
+
         return (
 
             <div>
@@ -93,7 +144,7 @@ class ParcelsList extends Component {
                                         <Grid item>
 
                                             {
-                                                this.state.parcels.map(
+                                                currentParcels.map(
                                                     parcel =>
                                                         <div key={parcel.id}>
                                                             <Card sx={{
@@ -185,6 +236,33 @@ class ParcelsList extends Component {
 
                                                 )
                                             }
+                                        </Grid>
+                                        <Grid item paddingTop={2}>
+                                            <div style={{ "float": "left" }}>
+                                                {currentPage} pranešimas iš {totalPages}
+                                            </div>
+                                            <div style={{ "float": "right" }}>
+                                                <Box
+                                                    sx={{
+                                                        display: 'flex',
+                                                        flexDirection: 'column',
+                                                        alignItems: 'center',
+                                                        '& > *:': {
+                                                            m: 1
+                                                        },
+                                                    }}
+                                                >
+                                                    <ButtonGroup variant="outlined" aria-label="outlined button group">
+                                                        <Button disabled={currentPage === 1 ? true : false} onClick={this.firstPage} ><KeyboardDoubleArrowLeftRoundedIcon /></Button>
+                                                        <Button disabled={currentPage === 1 ? true : false} onClick={this.prevPage} ><KeyboardArrowLeftRoundedIcon /></Button>
+                                                        <TextField sx={{ width: 50 }} size="small" length="20" name="currentPage" value={currentPage} onChange={this.changePage} InputProps={{
+                                                            readOnly: true,
+                                                        }}></TextField>
+                                                        <Button disabled={currentPage === totalPages ? true : false} onClick={this.nextPage} ><KeyboardArrowRightRoundedIcon /></Button>
+                                                        <Button disabled={currentPage === totalPages ? true : false} onClick={this.lastPage} ><KeyboardDoubleArrowRightRoundedIcon /></Button>
+                                                    </ButtonGroup>
+                                                </Box>
+                                            </div>
                                         </Grid>
                                         <Grid item>
                                             <Link to={"/create-new-parcel-message"}
