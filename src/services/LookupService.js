@@ -1,7 +1,7 @@
 import axios from "axios";
 import authHeader from "./auth-header";
 
-const API_BASE_URL = "http://localhost:8080/api/v1/";
+const API_BASE_URL = "https://dormitory-m-s-backend.herokuapp.com/api/v1/";
 
 class LookupService {
 
@@ -19,6 +19,7 @@ class LookupService {
         return axios.get(API_BASE_URL + 'students-which-do-not-have-parcel-message',
             { headers: authHeader() });
     }
+
 }
 
 export default new LookupService()
