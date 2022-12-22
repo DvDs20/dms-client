@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:8080/api/auth/";
+const API_URL = "https://dormitory-m-s-backend.herokuapp.com/api/auth/";
 
 class AuthService {
   async login(username, password) {
