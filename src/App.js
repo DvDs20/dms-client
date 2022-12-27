@@ -9,6 +9,7 @@ import PeopleAltRoundedIcon from '@mui/icons-material/PeopleAltRounded';
 import MeetingRoomRoundedIcon from '@mui/icons-material/MeetingRoomRounded';
 import ArticleRoundedIcon from '@mui/icons-material/ArticleRounded';
 import MarkunreadMailboxRoundedIcon from '@mui/icons-material/MarkunreadMailboxRounded';
+import LockRoundedIcon from '@mui/icons-material/LockRounded';
 
 import AuthService from "./services/auth.service";
 
@@ -32,6 +33,7 @@ import InfoContract from "./components/pages/contracts/info-contract.component";
 import ContractInfoForStudentComponent from "./components/pages/contracts/contract-info-for-student.component";
 import ParcelsListComponents from "./components/pages/parcels/parcelsList.components";
 import AddNewParcelMessage from "./components/pages/parcels/add-new-parcel-message.component";
+import ChangePassword from "./components/pages/profile/change-password.component";
 
 
 class App extends Component {
@@ -193,6 +195,12 @@ class App extends Component {
                       </Link>
                     </li>
                     <li className="nav-item">
+                      <Link to={"/change-password/" + localStorage.getItem('id')} className="nav-link">
+                        <LockRoundedIcon />
+                        <span>  Pakeisti slaptažodį</span>
+                      </Link>
+                    </li>
+                    <li className="nav-item">
                       <a href="/login" className="nav-link" onClick={this.logOut}>
                         <ExitToAppRoundedIcon />
                         <span>  Atsijungti</span>
@@ -231,6 +239,7 @@ class App extends Component {
             <Route path="/student-contract" element={<ContractInfoForStudentComponent />} />
             <Route path="/parcels" element={<ParcelsListComponents />} />
             <Route path="/create-new-parcel-message" element={<AddNewParcelMessage />} />
+            <Route path="/change-password/:id" element={<ChangePassword />} />
           </Routes>
         </div>
 

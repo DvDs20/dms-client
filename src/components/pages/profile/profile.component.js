@@ -47,274 +47,146 @@ export default class Profile extends Component {
             },
           }}
         >
-          <Box
+          <Paper
             sx={{
-              display: 'flex',
-              '& > :not(style)': {
-                m: 1,
-                width: 700
-              },
+              p: 2,
+              margin: 'auto',
+              maxWidth: 1100,
+              backgroundColor: (theme) =>
+                theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
             }}
           >
-            <Paper
-              sx={{
-                p: 2,
-                margin: 'auto',
-                maxWidth: 700,
-                backgroundColor: (theme) =>
-                  theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-              }}
-            >
-              <Grid container spacing={2}>
-                <Grid item xs={8} sm container>
-                  <Grid item xs container direction="column" spacing={2}>
-                    <Grid item xs>
-                      <div class="accordion" id="accordionExample">
-                        <div class="card">
-                          <div class="card-header" id="headingOne">
-                            <h2 class="mb-0">
-                              <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                Asmeninė informacija
-                              </button>
-                            </h2>
-                          </div>
-
-                          <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
-                            <div class="card-body">
-                              <div class="container">
-                                <Grid item xs container direction="column" spacing={2}>
-                                  <Grid item
-                                  >
-                                    <div class="row">
-                                      <div class="col-sm">
-                                        <TextField
-                                          fullWidth
-                                          id="outlined-read-only-input"
-                                          label="Slapyvardis"
-                                          value={currentUser.username}
-                                          InputProps={{
-                                            readOnly: true,
-                                          }}
-                                        />
-                                      </div>
-                                      <div class="col-sm">
-                                        <TextField
-                                          fullWidth
-                                          id="outlined-read-only-input"
-                                          label="Vardas"
-                                          value={currentUser.firstName}
-                                          InputProps={{
-                                            readOnly: true,
-                                          }}
-                                        />
-                                      </div>
-                                      <div class="col-sm">
-                                        <TextField
-                                          fullWidth
-                                          id="outlined-read-only-input"
-                                          label="Pavardė"
-                                          value={currentUser.lastName}
-                                          InputProps={{
-                                            readOnly: true,
-                                          }}
-                                        />
-                                      </div>
-                                    </div>
-                                  </Grid>
-                                  <Grid item
-                                  >
-                                    <div class="row">
-                                      <div class="col-sm">
-                                        <TextField
-                                          fullWidth
-                                          id="outlined-read-only-input"
-                                          label="Galiojimas iki"
-                                          value={currentUser.validityUntil}
-                                          InputProps={{
-                                            readOnly: true,
-                                          }}
-                                        />
-                                      </div>
-                                      <div class="col-sm">
-                                        <TextField
-                                          fullWidth
-                                          id="outlined-read-only-input"
-                                          label="Lytis"
-                                          value={currentUser.gender}
-                                          InputProps={{
-                                            readOnly: true,
-                                          }}
-                                        />
-                                      </div>
-                                      <div class="col-sm">
-                                        <TextField
-                                          fullWidth
-                                          id="outlined-read-only-input"
-                                          label="Gimimo data"
-                                          value={currentUser.dateOfBirth}
-                                          InputProps={{
-                                            readOnly: true,
-                                          }}
-                                        />
-                                      </div>
-                                    </div>
-                                  </Grid>
-                                  <Grid item
-                                  >
-                                    <div class="row">
-                                      <div class="col-sm">
-                                        <TextField
-                                          fullWidth
-                                          id="outlined-read-only-input"
-                                          label="Kambario numeris"
-                                          value={currentUser.roomNUmber}
-                                          InputProps={{
-                                            readOnly: true,
-                                          }}
-                                        />
-                                      </div>
-                                      <div class="col-sm">
-                                        <TextField
-                                          fullWidth
-                                          id="outlined-read-only-input"
-                                          label="Akademinė grupė"
-                                          value={currentUser.academicGroup}
-                                          InputProps={{
-                                            readOnly: true,
-                                          }}
-                                        />
-                                      </div>
-                                    </div>
-                                  </Grid>
-                                </Grid>
-                              </div>
-                            </div>
-                          </div>
+            <Grid container spacing={2}>
+              <Grid item xs={8} sm container>
+                <Grid item xs container direction="column" spacing={2}>
+                  <Grid item xs>
+                    <Grid item paddingBottom={2}>
+                      <Typography gutterBottom variant="subtitle1" component="div">Profilio informacija</Typography>
+                      <Divider />
+                    </Grid>
+                    <div class="accordion" id="accordionExample">
+                      <div class="card">
+                        <div class="card-header" id="headingOne">
+                          <h2 class="mb-0">
+                            <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                              Asmeninė informacija
+                            </button>
+                          </h2>
                         </div>
-                        <div class="card">
-                          <div class="card-header" id="headingTwo">
-                            <h2 class="mb-0">
-                              <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-                                Kontaktinė informacija
-                              </button>
-                            </h2>
-                          </div>
 
-                          <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
-                            <div class="card-body">
-                              <div class="container">
-                                <Grid item xs container direction="column" spacing={2}>
-                                  <Grid item
-                                  >
-                                    <div class="row">
-                                      <div class="col-sm">
-                                        <TextField
-                                          fullWidth
-                                          id="outlined-read-only-input"
-                                          label="El. paštas"
-                                          value={currentUser.email}
-                                          InputProps={{
-                                            readOnly: false,
-                                          }}
-                                        />
-                                      </div>
-                                      <div class="col-sm">
-                                        <TextField
-                                          fullWidth
-                                          id="outlined-read-only-input"
-                                          label="Tel. numeris"
-                                          value={currentUser.number}
-                                          InputProps={{
-                                            readOnly: false,
-                                          }}
-                                        />
-                                      </div>
+                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                          <div class="card-body">
+                            <div class="container">
+                              <Grid item xs container direction="column" spacing={2}>
+                                <Grid item
+                                >
+                                  <div class="row">
+                                    <div class="col-sm">
+                                      <TextField
+                                        fullWidth
+                                        id="outlined-read-only-input"
+                                        label="Vardas"
+                                        value={currentUser.firstName}
+                                        InputProps={{
+                                          readOnly: true,
+                                        }}
+                                      />
                                     </div>
-                                  </Grid>
+                                    <div class="col-sm">
+                                      <TextField
+                                        fullWidth
+                                        id="outlined-read-only-input"
+                                        label="Pavardė"
+                                        value={currentUser.lastName}
+                                        InputProps={{
+                                          readOnly: true,
+                                        }}
+                                      />
+                                    </div>
+                                  </div>
                                 </Grid>
-                              </div>
+                                <Grid item>
+                                  <div class="row">
+                                    <div class="col-sm">
+                                      <TextField
+                                        fullWidth
+                                        id="outlined-read-only-input"
+                                        label="Prisijungimo vardas"
+                                        value={currentUser.username}
+                                        InputProps={{
+                                          readOnly: true,
+                                        }}
+                                      />
+                                    </div>
+                                    <div class="col-sm">
+                                      <TextField
+                                        fullWidth
+                                        id="outlined-read-only-input"
+                                        label="Akademinė grupė"
+                                        value={currentUser.academicGroup}
+                                        InputProps={{
+                                          readOnly: true,
+                                        }}
+                                      />
+                                    </div>
+                                  </div>
+                                </Grid>
+                              </Grid>
                             </div>
                           </div>
                         </div>
                       </div>
-                    </Grid>
-                    <Grid item>
-                      <Button fullWidth variant="outlined" color="success">Išsaugoti pakeitimus</Button>
-                    </Grid>
+                      <div class="card">
+                        <div class="card-header" id="headingTwo">
+                          <h2 class="mb-0">
+                            <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                              Kontaktinė informacija
+                            </button>
+                          </h2>
+                        </div>
+
+                        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                          <div class="card-body">
+                            <div class="container">
+                              <Grid item xs container direction="column" spacing={2}>
+                                <Grid item
+                                >
+                                  <div class="row">
+                                    <div class="col-sm">
+                                      <TextField
+                                        fullWidth
+                                        id="outlined-read-only-input"
+                                        label="Elektroninis paštas"
+                                        value={currentUser.email}
+                                        InputProps={{
+                                          readOnly: true,
+                                        }}
+                                      />
+                                    </div>
+                                    <div class="col-sm">
+                                      <TextField
+                                        fullWidth
+                                        id="outlined-read-only-input"
+                                        label="Telefono numeris"
+                                        value={currentUser.number}
+                                        InputProps={{
+                                          readOnly: true,
+                                        }}
+                                      />
+                                    </div>
+                                  </div>
+                                </Grid>
+                              </Grid>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </Grid>
                 </Grid>
               </Grid>
-            </Paper>
-          </Box>
-          <Box
-            sx={{
-              display: 'flex',
-              '& > :not(style)': {
-                m: 1,
-                width: 400
-              },
-            }}
-          >
-            <Paper
-              sx={{
-                p: 2,
-                maxWidth: 400,
-                maxHeight: 340,
-                backgroundColor: (theme) =>
-                  theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-              }}
-            >
-              <Grid container spacing={2}>
-                <Grid item xs={8} sm container>
-                  <Grid item xs container direction="column" spacing={2}>
-                    <Grid item
-                    >
-                      <Typography gutterBottom variant="subtitle1" component="div">Slaptažodžio keitimas</Typography>
-                      <Divider />
-                    </Grid>
-                    <Grid item
-                    >
-                      <TextField
-                        fullWidth
-                        id="outlined-read-only-input"
-                        label="Dabartinis slaptažodis"
-                        type="password"
-                        InputProps={{
-                          readOnly: false,
-                          autoComplete: "new-password"
-                        }}
-                      />
-                    </Grid>
-                    <Grid item>
-                      <TextField
-                        fullWidth
-                        id="outlined-read-only-input"
-                        label="Naujas slaptaždis"
-                        InputProps={{
-                          readOnly: false,
-                        }}
-                        type="password"
-                      />
-                    </Grid>
-                    <Grid item>
-                      <TextField
-                        fullWidth
-                        id="outlined-read-only-input"
-                        label="Pakartokite naują slaptažodį"
-                        InputProps={{
-                          readOnly: false,
-                        }}
-                        type="password"
-                      />
-                    </Grid>
-                    <Grid item>
-                      <Button fullWidth variant="outlined" color="success">Pakeisti slaptažodį</Button>
-                    </Grid>
-                  </Grid>
-                </Grid>
-              </Grid>
-            </Paper>
-          </Box>
+            </Grid>
+          </Paper>
         </Box>
       </Box>
     );

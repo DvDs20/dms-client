@@ -29,7 +29,7 @@ class EditStudent extends Component {
     findStudentById = () => {
         const { id } = this.props.router.params;
 
-        UserService.getStudentById(id)
+        UserService.getUserById(id)
             .then(response => {
                 if (response.data != null) {
                     this.setState({
