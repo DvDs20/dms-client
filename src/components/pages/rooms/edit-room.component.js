@@ -68,7 +68,7 @@ class EditRoom extends Component {
         RoomService.updateRoom(room.roomId, room)
             .then(response => {
                 if (response.data != null) {
-                    this.setState({ "showUpdateAler": true })
+                    this.setState({ "showUpdateAlert": true })
                     setTimeout(() => this.setState({ "showUpdateAlert": false }), 5000);
                     setTimeout(() => this.roomsList(), 3000);
                 }
@@ -118,8 +118,8 @@ class EditRoom extends Component {
 
         return (
             <div>
-                <div style={{ "display": this.state.showUpdateAler ? "block" : "none" }}>
-                    <Toast show={this.state.showUpdateAler} message={"Kambarys atnaujintas sėkmingai!"} type={"info"} />
+                <div style={{ "display": this.state.showUpdateAlert ? "block" : "none" }}>
+                    <Toast show={this.state.showUpdateAlert} message={"Kambarys atnaujintas sėkmingai!"} type={"info"} />
                 </div>
                 <div style={{ "display": this.state.showDeleteAlert ? "block" : "none" }}>
                     <Toast show={this.state.showDeleteAlert} message={"Kambarys ištrintas sėkmingai!"} type={"error"} />
