@@ -34,6 +34,7 @@ import ContractInfoForStudentComponent from "./components/pages/contracts/contra
 import ParcelsListComponents from "./components/pages/parcels/parcelsList.components";
 import AddNewParcelMessage from "./components/pages/parcels/add-new-parcel-message.component";
 import ChangePassword from "./components/pages/profile/change-password.component";
+import ParcelMessageViewForStudentsComponent from "./components/pages/parcels/parcel-message-view-for-students.component";
 
 
 class App extends Component {
@@ -50,6 +51,7 @@ class App extends Component {
       showContractsList: false,
       showContractForStudent: false,
       showParcelsList: false,
+      showParcelsMessageViewForStudents: false,
       currentUser: undefined,
     };
   }
@@ -68,6 +70,7 @@ class App extends Component {
         showContractsList: user.roles.includes("ROLE_ADMIN"),
         showContractForStudent: user.roles.includes("ROLE_STUDENT"),
         showParcelsList: user.roles.includes("ROLE_ADMIN"),
+        showParcelsMessageViewForStudents: user.roles.includes("ROLE_STUDENT"),
       });
     }
 
@@ -89,13 +92,14 @@ class App extends Component {
       showContractsList: false,
       showContractForStudent: false,
       showParcelsList: false,
+      showParcelsMessageViewForStudents: false,
       currentUser: undefined,
     });
   }
 
 
   render() {
-    const { currentUser, showModeratorBoard, showAdminBoard, showStudentBoard, showStudentsList, showRoomsList, showContractsList, showContractForStudent, showParcelsList } = this.state;
+    const { currentUser, showModeratorBoard, showAdminBoard, showStudentBoard, showStudentsList, showRoomsList, showContractsList, showContractForStudent, showParcelsList, showParcelsMessageViewForStudents } = this.state;
     return (
       <div>
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -174,6 +178,17 @@ class App extends Component {
               </li>
             )}
 
+            {showParcelsMessageViewForStudents && (
+              <li className="nav-item">
+                <Link to={"/student-parcels"} className="nav-link">
+                  <Button>
+                    <MarkunreadMailboxRoundedIcon />
+                    <span>Siuntos</span>
+                  </Button>
+                </Link>
+              </li>
+            )}
+
 
           </div>
 
@@ -238,6 +253,7 @@ class App extends Component {
             <Route path="/contracts/info/:id" element={<InfoContract />} />
             <Route path="/student-contract" element={<ContractInfoForStudentComponent />} />
             <Route path="/parcels" element={<ParcelsListComponents />} />
+            <Route path="/student-parcels" element={<ParcelMessageViewForStudentsComponent />} />
             <Route path="/create-new-parcel-message" element={<AddNewParcelMessage />} />
             <Route path="/change-password/:id" element={<ChangePassword />} />
           </Routes>
