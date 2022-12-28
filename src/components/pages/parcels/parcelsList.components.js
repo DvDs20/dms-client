@@ -157,7 +157,12 @@ class ParcelsList extends Component {
                                                             >
                                                                 <CardContent>
                                                                     <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                                                                        {parcel.messageTime}
+                                                                        <div>{parcel.messageTime}
+                                                                            {parcel.viewStatus === 1 ?
+                                                                                (<span style={{ backgroundColor: 'rgba(227, 30, 16, 0.3)', borderRadius: 12, padding: 4, margin: 10 }} ><FiberManualRecordRoundedIcon color="warning" fontSize="small" />Pranešimas neperžiūrėtas</span>) :
+                                                                                <span style={{ backgroundColor: 'rgba(47, 122, 32, 0.3)', borderRadius: 12, padding: 4, margin: 10 }} ><FiberManualRecordRoundedIcon color="info" fontSize="small" />Prenešimas peržiūrėtas</span>
+                                                                            }
+                                                                        </div>
                                                                     </Typography>
                                                                     <Typography variant="h6" component="div">{parcel.messageTitle}</Typography>
                                                                     <Typography sx={{ mb: 1.5 }} color="text.secondary">
