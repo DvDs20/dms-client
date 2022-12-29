@@ -7,7 +7,7 @@ import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import { Box } from "@mui/system";
 import TextField from '@mui/material/TextField';
-import { Button, Divider } from "@mui/material";
+import { Divider } from "@mui/material";
 
 export default class Profile extends Component {
   constructor(props) {

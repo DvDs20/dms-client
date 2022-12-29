@@ -7,7 +7,6 @@ import Form from 'react-bootstrap/Form';
 import Toast from "../../alerts/toast.component";
 import SendRoundedIcon from '@mui/icons-material/SendRounded';
 
-import RoomService from "../../../services/RoomService";
 import { withRouter } from "../../../common/with-router";
 import { Textarea } from "@mui/joy";
 import MessagesTypesService from "../../../services/MessagesTypesService";

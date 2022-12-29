@@ -109,7 +109,7 @@ class App extends Component {
 
 
   render() {
-    const { currentUser, showModeratorBoard, showAdminBoard, showStudentBoard, showStudentsList, showRoomsList, showContractsList, showContractForStudent, showParcelsList, showParcelsMessageViewForStudents, showCreateNewMessage, showMessagesList } = this.state;
+    const { currentUser, showStudentsList, showRoomsList, showContractsList, showContractForStudent, showParcelsList, showParcelsMessageViewForStudents, showCreateNewMessage, showMessagesList } = this.state;
     return (
       <>
         <Helmet>
@@ -155,16 +155,6 @@ class App extends Component {
                     <Button>
                       <ArticleRoundedIcon />
                       <span>Sutartys</span>
-                    </Button>
-                  </Link>
-                </li>
-              )}
-
-              {showStudentBoard && (
-                <li className="nav-item">
-                  <Link to={"/student"} className="nav-link">
-                    <Button>
-                      Studentas
                     </Button>
                   </Link>
                 </li>
