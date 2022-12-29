@@ -38,6 +38,7 @@ import ChangePassword from "./components/pages/profile/change-password.component
 import ParcelMessageViewForStudentsComponent from "./components/pages/parcels/parcel-message-view-for-students.component";
 import CreateNewMessage from "./components/pages/messages/create-new-message.component";
 import MessagesList from "./components/pages/messages/messagesList.component";
+import { Helmet } from "react-helmet";
 
 
 class App extends Component {
@@ -110,190 +111,195 @@ class App extends Component {
   render() {
     const { currentUser, showModeratorBoard, showAdminBoard, showStudentBoard, showStudentsList, showRoomsList, showContractsList, showContractForStudent, showParcelsList, showParcelsMessageViewForStudents, showCreateNewMessage, showMessagesList } = this.state;
     return (
-      <div>
-        <nav className="navbar navbar-expand-lg navbar-light bg-light">
-          <Link className="navbar-brand me-2" to={"/"}>
-            <img
-              src={MyLogo}
-              alt="logo"
-              height="35"
-              loading="lazy"
-            />
-          </Link>
-          <div className="navbar-nav mr-auto">
+      <>
+        <Helmet>
+          <title>Bendrabučio valdymo sistema</title>
+        </Helmet>
+        <div>
+          <nav className="navbar navbar-expand-lg navbar-light bg-light">
+            <Link className="navbar-brand me-2" to={"/"}>
+              <img
+                src={MyLogo}
+                alt="logo"
+                height="35"
+                loading="lazy"
+              />
+            </Link>
+            <div className="navbar-nav mr-auto">
 
-            {showStudentsList && (
-              <li className="nav-item">
-                <Link to={"/students"} className="nav-link">
-                  <Button>
-                    <PeopleAltRoundedIcon />
-                    <span>Studentai</span>
-                  </Button>
-                </Link>
-              </li>
-            )}
+              {showStudentsList && (
+                <li className="nav-item">
+                  <Link to={"/students"} className="nav-link">
+                    <Button>
+                      <PeopleAltRoundedIcon />
+                      <span>Studentai</span>
+                    </Button>
+                  </Link>
+                </li>
+              )}
 
-            {showRoomsList && (
-              <li className="nav-item">
-                <Link to={"/rooms"} className="nav-link">
-                  <Button>
-                    <MeetingRoomRoundedIcon />
-                    <span>Kambariai</span>
-                  </Button>
-                </Link>
-              </li>
-            )}
+              {showRoomsList && (
+                <li className="nav-item">
+                  <Link to={"/rooms"} className="nav-link">
+                    <Button>
+                      <MeetingRoomRoundedIcon />
+                      <span>Kambariai</span>
+                    </Button>
+                  </Link>
+                </li>
+              )}
 
-            {showContractsList && (
-              <li className="nav-item">
-                <Link to={"/contracts"} className="nav-link">
-                  <Button>
-                    <ArticleRoundedIcon />
-                    <span>Sutartys</span>
-                  </Button>
-                </Link>
-              </li>
-            )}
+              {showContractsList && (
+                <li className="nav-item">
+                  <Link to={"/contracts"} className="nav-link">
+                    <Button>
+                      <ArticleRoundedIcon />
+                      <span>Sutartys</span>
+                    </Button>
+                  </Link>
+                </li>
+              )}
 
-            {showStudentBoard && (
-              <li className="nav-item">
-                <Link to={"/student"} className="nav-link">
-                  <Button>
-                    Studentas
-                  </Button>
-                </Link>
-              </li>
-            )}
+              {showStudentBoard && (
+                <li className="nav-item">
+                  <Link to={"/student"} className="nav-link">
+                    <Button>
+                      Studentas
+                    </Button>
+                  </Link>
+                </li>
+              )}
 
-            {showContractForStudent && (
-              <li className="nav-item">
-                <Link to={"/student-contract"} className="nav-link">
-                  <Button>
-                    <ArticleRoundedIcon />
-                    <span>Kontraktas</span>
-                  </Button>
-                </Link>
-              </li>
-            )}
+              {showContractForStudent && (
+                <li className="nav-item">
+                  <Link to={"/student-contract"} className="nav-link">
+                    <Button>
+                      <ArticleRoundedIcon />
+                      <span>Kontraktas</span>
+                    </Button>
+                  </Link>
+                </li>
+              )}
 
-            {showParcelsList && (
-              <li className="nav-item">
-                <Link to={"/parcels"} className="nav-link">
-                  <Button>
-                    <MarkunreadMailboxRoundedIcon />
-                    <span>Siuntos</span>
-                  </Button>
-                </Link>
-              </li>
-            )}
+              {showParcelsList && (
+                <li className="nav-item">
+                  <Link to={"/parcels"} className="nav-link">
+                    <Button>
+                      <MarkunreadMailboxRoundedIcon />
+                      <span>Siuntos</span>
+                    </Button>
+                  </Link>
+                </li>
+              )}
 
-            {showParcelsMessageViewForStudents && (
-              <li className="nav-item">
-                <Link to={"/student-parcels"} className="nav-link">
-                  <Button>
-                    <MarkunreadMailboxRoundedIcon />
-                    <span>Siuntos</span>
-                  </Button>
-                </Link>
-              </li>
-            )}
+              {showParcelsMessageViewForStudents && (
+                <li className="nav-item">
+                  <Link to={"/student-parcels"} className="nav-link">
+                    <Button>
+                      <MarkunreadMailboxRoundedIcon />
+                      <span>Siuntos</span>
+                    </Button>
+                  </Link>
+                </li>
+              )}
 
-            {showCreateNewMessage && (
-              <li className="nav-item">
-                <Link to={"/new-message"} className="nav-link">
-                  <Button>
-                    <EmailRoundedIcon />
-                    <span>Pranešimai</span>
-                  </Button>
-                </Link>
-              </li>
-            )}
+              {showCreateNewMessage && (
+                <li className="nav-item">
+                  <Link to={"/new-message"} className="nav-link">
+                    <Button>
+                      <EmailRoundedIcon />
+                      <span>Pranešimai</span>
+                    </Button>
+                  </Link>
+                </li>
+              )}
 
-            {showMessagesList && (
-              <li className="nav-item">
-                <Link to={"/messages"} className="nav-link">
-                  <Button>
-                    <EmailRoundedIcon />
-                    <span>Pranešimai</span>
-                  </Button>
-                </Link>
-              </li>
-            )}
+              {showMessagesList && (
+                <li className="nav-item">
+                  <Link to={"/messages"} className="nav-link">
+                    <Button>
+                      <EmailRoundedIcon />
+                      <span>Pranešimai</span>
+                    </Button>
+                  </Link>
+                </li>
+              )}
 
 
-          </div>
+            </div>
 
-          {currentUser ? (
-            <div>
-              <div className="col">
-                <div className="dropdown">
-                  <Button
-                    id="dropdownMenuButton"
-                    data-toggle="dropdown"
-                    aria-haspopup="true">
-                    <PersonRoundedIcon /> {currentUser.username}
-                  </Button>
-                  <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <li className="nav-item">
-                      <Link to={"/profile"} className="nav-link">
-                        <AccountBoxRoundedIcon />
-                        <span>  Profilis</span>
-                      </Link>
-                    </li>
-                    <li className="nav-item">
-                      <Link to={"/change-password/" + localStorage.getItem('id')} className="nav-link">
-                        <LockRoundedIcon />
-                        <span>  Pakeisti slaptažodį</span>
-                      </Link>
-                    </li>
-                    <li className="nav-item">
-                      <a href="/login" className="nav-link" onClick={this.logOut}>
-                        <ExitToAppRoundedIcon />
-                        <span>  Atsijungti</span>
-                      </a>
-                    </li>
+            {currentUser ? (
+              <div>
+                <div className="col">
+                  <div className="dropdown">
+                    <Button
+                      id="dropdownMenuButton"
+                      data-toggle="dropdown"
+                      aria-haspopup="true">
+                      <PersonRoundedIcon /> {currentUser.username}
+                    </Button>
+                    <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                      <li className="nav-item">
+                        <Link to={"/profile"} className="nav-link">
+                          <AccountBoxRoundedIcon />
+                          <span>  Profilis</span>
+                        </Link>
+                      </li>
+                      <li className="nav-item">
+                        <Link to={"/change-password/" + localStorage.getItem('id')} className="nav-link">
+                          <LockRoundedIcon />
+                          <span>  Pakeisti slaptažodį</span>
+                        </Link>
+                      </li>
+                      <li className="nav-item">
+                        <a href="/login" className="nav-link" onClick={this.logOut}>
+                          <ExitToAppRoundedIcon />
+                          <span>  Atsijungti</span>
+                        </a>
+                      </li>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          ) : (
-            <div className="navbar-nav ml-auto">
-              <li className="nav-item">
-                <Link to={"/login"} className="nav-link">
-                  <Button variant="outlined">Prisijungti</Button>
-                </Link>
-              </li>
-            </div>
-          )}
-        </nav>
+            ) : (
+              <div className="navbar-nav ml-auto">
+                <li className="nav-item">
+                  <Link to={"/login"} className="nav-link">
+                    <Button variant="outlined">Prisijungti</Button>
+                  </Link>
+                </li>
+              </div>
+            )}
+          </nav>
 
-        <div className="container mt-3">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/home" element={<Home />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/students" element={<StudentsList />} />
-            <Route path="/rooms" element={<RoomsList />} />
-            <Route path="/add-room" element={<AddRoom />} />
-            <Route path="/rooms/edit/:id" element={<EditRoom />} />
-            <Route path="/add-student" element={<AddStudent />} />
-            <Route path="/students/edit/:id" element={<EditStudent />} />
-            <Route path="/contracts" element={<ContractsList />} />
-            <Route path="/add-contract" element={<AddContract />} />
-            <Route path="/contracts/info/:id" element={<InfoContract />} />
-            <Route path="/student-contract" element={<ContractInfoForStudentComponent />} />
-            <Route path="/parcels" element={<ParcelsListComponents />} />
-            <Route path="/student-parcels" element={<ParcelMessageViewForStudentsComponent />} />
-            <Route path="/create-new-parcel-message" element={<AddNewParcelMessage />} />
-            <Route path="/change-password/:id" element={<ChangePassword />} />
-            <Route path="/new-message" element={<CreateNewMessage />} />
-            <Route path="/messages" element={<MessagesList />} />
-          </Routes>
+          <div className="container mt-3">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/home" element={<Home />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/students" element={<StudentsList />} />
+              <Route path="/rooms" element={<RoomsList />} />
+              <Route path="/add-room" element={<AddRoom />} />
+              <Route path="/rooms/edit/:id" element={<EditRoom />} />
+              <Route path="/add-student" element={<AddStudent />} />
+              <Route path="/students/edit/:id" element={<EditStudent />} />
+              <Route path="/contracts" element={<ContractsList />} />
+              <Route path="/add-contract" element={<AddContract />} />
+              <Route path="/contracts/info/:id" element={<InfoContract />} />
+              <Route path="/student-contract" element={<ContractInfoForStudentComponent />} />
+              <Route path="/parcels" element={<ParcelsListComponents />} />
+              <Route path="/student-parcels" element={<ParcelMessageViewForStudentsComponent />} />
+              <Route path="/create-new-parcel-message" element={<AddNewParcelMessage />} />
+              <Route path="/change-password/:id" element={<ChangePassword />} />
+              <Route path="/new-message" element={<CreateNewMessage />} />
+              <Route path="/messages" element={<MessagesList />} />
+            </Routes>
+          </div>
+
+          {/* <AuthVerify logOut={this.logOut}/> */}
         </div>
-
-        {/* <AuthVerify logOut={this.logOut}/> */}
-      </div>
+      </>
     );
   }
 }
