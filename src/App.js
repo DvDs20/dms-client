@@ -10,6 +10,7 @@ import MeetingRoomRoundedIcon from '@mui/icons-material/MeetingRoomRounded';
 import ArticleRoundedIcon from '@mui/icons-material/ArticleRounded';
 import MarkunreadMailboxRoundedIcon from '@mui/icons-material/MarkunreadMailboxRounded';
 import LockRoundedIcon from '@mui/icons-material/LockRounded';
+import EmailRoundedIcon from '@mui/icons-material/EmailRounded';
 
 import AuthService from "./services/auth.service";
 
@@ -35,6 +36,8 @@ import ParcelsListComponents from "./components/pages/parcels/parcelsList.compon
 import AddNewParcelMessage from "./components/pages/parcels/add-new-parcel-message.component";
 import ChangePassword from "./components/pages/profile/change-password.component";
 import ParcelMessageViewForStudentsComponent from "./components/pages/parcels/parcel-message-view-for-students.component";
+import CreateNewMessage from "./components/pages/messages/create-new-message.component";
+import MessagesList from "./components/pages/messages/messagesList.component";
 
 
 class App extends Component {
@@ -52,6 +55,8 @@ class App extends Component {
       showContractForStudent: false,
       showParcelsList: false,
       showParcelsMessageViewForStudents: false,
+      showCreateNewMessage: false,
+      showMessagesList: false,
       currentUser: undefined,
     };
   }
@@ -71,6 +76,8 @@ class App extends Component {
         showContractForStudent: user.roles.includes("ROLE_STUDENT"),
         showParcelsList: user.roles.includes("ROLE_ADMIN"),
         showParcelsMessageViewForStudents: user.roles.includes("ROLE_STUDENT"),
+        showCreateNewMessage: user.roles.includes("ROLE_STUDENT"),
+        showMessagesList: user.roles.includes("ROLE_ADMIN")
       });
     }
 
@@ -93,13 +100,15 @@ class App extends Component {
       showContractForStudent: false,
       showParcelsList: false,
       showParcelsMessageViewForStudents: false,
+      showCreateNewMessage: false,
+      showMessagesList: false,
       currentUser: undefined,
     });
   }
 
 
   render() {
-    const { currentUser, showModeratorBoard, showAdminBoard, showStudentBoard, showStudentsList, showRoomsList, showContractsList, showContractForStudent, showParcelsList, showParcelsMessageViewForStudents } = this.state;
+    const { currentUser, showModeratorBoard, showAdminBoard, showStudentBoard, showStudentsList, showRoomsList, showContractsList, showContractForStudent, showParcelsList, showParcelsMessageViewForStudents, showCreateNewMessage, showMessagesList } = this.state;
     return (
       <div>
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -189,6 +198,28 @@ class App extends Component {
               </li>
             )}
 
+            {showCreateNewMessage && (
+              <li className="nav-item">
+                <Link to={"/new-message"} className="nav-link">
+                  <Button>
+                    <EmailRoundedIcon />
+                    <span>Pranešimai</span>
+                  </Button>
+                </Link>
+              </li>
+            )}
+
+            {showMessagesList && (
+              <li className="nav-item">
+                <Link to={"/messages"} className="nav-link">
+                  <Button>
+                    <EmailRoundedIcon />
+                    <span>Pranešimai</span>
+                  </Button>
+                </Link>
+              </li>
+            )}
+
 
           </div>
 
@@ -256,6 +287,8 @@ class App extends Component {
             <Route path="/student-parcels" element={<ParcelMessageViewForStudentsComponent />} />
             <Route path="/create-new-parcel-message" element={<AddNewParcelMessage />} />
             <Route path="/change-password/:id" element={<ChangePassword />} />
+            <Route path="/new-message" element={<CreateNewMessage />} />
+            <Route path="/messages" element={<MessagesList />} />
           </Routes>
         </div>
 
