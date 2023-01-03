@@ -165,7 +165,7 @@ class App extends Component {
                   <Link to={"/student-contract"} className="nav-link">
                     <Button>
                       <ArticleRoundedIcon />
-                      <span>Kontraktas</span>
+                      <span>Sutartis</span>
                     </Button>
                   </Link>
                 </li>
