@@ -19,7 +19,7 @@ function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Visos teisės saugomos © '}
-      <Link color="inherit" href="http://localhost:8081/login">
+      <Link color="inherit" href="https://bvsystem.vercel.app/login">
         Bendrabučio valdymo sistema
       </Link>{' '}
       {new Date().getFullYear()}
